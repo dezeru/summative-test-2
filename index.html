@@ -16,13 +16,13 @@
     --border: #cbd5e1;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  
+
   html, body {
     margin: 0; padding: 0; width: 100%; height: 100%; height: 100dvh;
     background: var(--bg); color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     overflow: hidden;
-    user-select: none; /* Disables text selection/copying */
+    user-select: none;
   }
 
   .app-container {
@@ -31,7 +31,6 @@
     margin: 0 auto; background: var(--card); position: relative;
   }
 
-  /* ---------------- START SCREEN ---------------- */
   #start-screen {
     padding: 20px; overflow-y: auto; display: flex;
     flex-direction: column; justify-content: center; height: 100%;
@@ -60,7 +59,6 @@
   }
   .input-field:focus { border-color: var(--primary); }
 
-  /* ---------------- EXAM SCREEN ---------------- */
   #exam-screen {
     display: flex; flex-direction: column;
     height: 100%; height: 100dvh; overflow: hidden;
@@ -133,7 +131,6 @@
   .btn-next { background: var(--primary); color: white; }
   .btn-submit { background: var(--success); color: white; display: none; }
 
-  /* Modal */
   .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(15, 23, 42, 0.6); display: none;
@@ -156,7 +153,6 @@
 <body oncontextmenu="return false;">
 
 <div class="app-container">
-  <!-- START SCREEN -->
   <div id="start-screen">
     <div class="school-title">
       <h2>MORENO INTEGRATED SCHOOL</h2>
@@ -172,7 +168,6 @@
       </ul>
     </div>
 
-    <!-- Dropdown and Passcode Verification Box -->
     <div class="auth-box">
       <div class="input-group">
         <label for="student-select">Student Name (Grade 12 - Resourceful)</label>
@@ -216,7 +211,6 @@
     </div>
   </div>
 
-  <!-- EXAM SCREEN -->
   <div id="exam-screen" style="display:none;">
     <div class="pinned-top">
       <div class="header-row">
@@ -240,7 +234,6 @@
     </div>
   </div>
 
-  <!-- RESULT SCREEN -->
   <div id="result-screen" style="display:none; padding: 30px 20px; text-align: center; margin: auto;">
     <div class="school-title">
       <h2>Exam Completed</h2>
@@ -249,7 +242,6 @@
   </div>
 </div>
 
-<!-- Modal Dialog -->
 <div class="modal-overlay" id="submission-modal">
   <div class="modal">
     <h3 id="modal-title">Unanswered Questions Remaining</h3>
@@ -263,12 +255,8 @@
 </div>
 
 <script>
-// ============================================================================
-// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx64vRes50Y6ouXGUWBMGv-00x9fHhhcFlZc52LO8Lb20TjArJvPgBFV1kLIr5kRGB2/exec";
-// ============================================================================
 
-// NO ANSWERS STORED HERE - Even if students inspect, there is nothing to find
 const QUESTIONS = [
   { id: 1, q: "What HTML tag is historically used to define a specific window frame within a frameset document?", options: { a: "<frame> element tag", b: "<panel> element tag", c: "<block> element tag", d: "<split> element tag" } },
   { id: 2, q: "Why is the action attribute necessary within an HTML <form> element definition?", options: { a: "It defines the visual styling applied to the form inputs.", b: "It specifies where to send data when the form is submitted.", c: "It determines the input data types allowed for the user.", d: "It restricts the maximum character limit for the inputs." } },
@@ -311,7 +299,6 @@ let timeLeft = 30 * 60;
 let timerInterval = null;
 let tabSwitches = 0;
 
-// Block DevTools shortcuts on PC
 document.addEventListener("keydown", (e) => {
   if (e.key === "F12" || 
      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) || 
@@ -320,7 +307,6 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// Universal Anti-Cheat Trackers
 function recordUnfocusedEvent() {
   if (document.getElementById("exam-screen").style.display === "flex") {
     tabSwitches++;
@@ -362,7 +348,6 @@ function validateAndStart() {
   btn.disabled = true;
   btn.textContent = "Verifying...";
 
-  // Backend validates PIN and checks for duplicates
   fetch(`${SCRIPT_URL}?pin=${encodeURIComponent(enteredPin)}&student=${encodeURIComponent(fullName)}`)
     .then(res => res.json())
     .then(data => {
@@ -443,7 +428,6 @@ function updatePaletteAndProgress() {
     `Question ${currentIndex + 1} of ${total} (${answeredCount} answered)`;
 }
 
-// Safe DOM rendering
 function renderQuestion() {
   const qData = randomizedQuestions[currentIndex];
   const container = document.getElementById("question-container");
@@ -482,7 +466,6 @@ function renderQuestion() {
   container.scrollTop = 0;
   document.getElementById("btn-prev").disabled = currentIndex === 0;
   
-  // Submit Exam strictly appears only on Question 30
   if (currentIndex === randomizedQuestions.length - 1) {
     document.getElementById("btn-next").style.display = "none";
     document.getElementById("btn-submit").style.display = "inline-block";
