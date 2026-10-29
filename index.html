@@ -2,154 +2,164 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>2nd Summative Test - Computer Programming (.NET)</title>
 <style>
   :root {
     --primary: #1e3a8a;
     --primary-hover: #172554;
     --success: #16a34a;
-    --warning: #f59e0b;
     --danger: #dc2626;
     --bg: #f8fafc;
     --card: #ffffff;
     --text: #0f172a;
     --border: #cbd5e1;
   }
-  * { box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
     background: var(--bg);
     color: var(--text);
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
   }
-  .container {
-    width: 100%;
-    max-width: 720px;
-    background: var(--card);
-    padding: 32px;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
-    margin-top: 20px;
-    margin-bottom: 40px;
-  }
-  .school-title { text-align: center; margin-bottom: 24px; }
-  .school-title h2 { margin: 0; color: var(--primary); font-size: 1.35rem; }
-  .school-title p { margin: 4px 0 0; color: #64748b; font-size: 0.95rem; }
 
-  /* Start Screen Form */
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    height: 100dvh;
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card);
+    position: relative;
+  }
+
+  /* ---------------- START SCREEN ---------------- */
+  #start-screen {
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+  .school-title { text-align: center; margin-bottom: 16px; }
+  .school-title h2 { margin: 0; color: var(--primary); font-size: 1.2rem; }
+  .school-title p { margin: 4px 0 0; color: #64748b; font-size: 0.88rem; }
+
   .instructions-box {
     background: #f8fafc;
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 18px 22px;
-    margin: 20px 0;
-    text-align: left;
-    font-size: 0.92rem;
-    line-height: 1.6;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: #334155;
   }
-  .instructions-box ul { margin: 8px 0 0 20px; padding: 0; }
-  .instructions-box li { margin-bottom: 6px; }
+  .instructions-box ul { margin: 6px 0 0 16px; padding: 0; }
+  .instructions-box li { margin-bottom: 4px; }
+
   .name-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 20px 0;
+    gap: 12px;
+    margin: 14px 0;
   }
-  .input-group { text-align: left; }
-  .input-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 6px; }
+  .input-group label { display: block; font-size: 0.8rem; font-weight: 600; color: #475569; margin-bottom: 4px; }
   .input-field {
     width: 100%;
-    padding: 12px;
+    padding: 10px 12px;
     border: 1.5px solid var(--border);
     border-radius: 6px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     outline: none;
-    transition: border-color 0.2s;
   }
   .input-field:focus { border-color: var(--primary); }
 
-  /* Test Header & Timer */
-  .header {
+  /* ---------------- EXAM SCREEN (PINNED LAYOUT) ---------------- */
+  #exam-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Pinned Top Bar */
+  .pinned-top {
+    flex-shrink: 0;
+    background: var(--card);
+    padding: 10px 14px 6px;
+    border-bottom: 1px solid #e2e8f0;
+    z-index: 10;
+  }
+  .header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 16px;
-    margin-bottom: 18px;
+    margin-bottom: 6px;
   }
   .timer {
-    font-size: 1.15rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--danger);
     background: #fee2e2;
-    padding: 6px 14px;
+    padding: 3px 9px;
     border-radius: 9999px;
     letter-spacing: 0.05em;
   }
-  .progress-info { font-weight: 600; color: #475569; font-size: 0.95rem; }
+  .progress-info { font-weight: 600; color: #475569; font-size: 0.82rem; }
 
-  /* Progress Bar */
+  /* Linear Progress Bar */
   .progress-bar-container {
     width: 100%;
-    height: 10px;
+    height: 6px;
     background-color: #e2e8f0;
     border-radius: 9999px;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
   }
   .progress-bar-fill {
     height: 100%;
     width: 0%;
     background-color: var(--primary);
-    transition: width 0.3s ease;
+    transition: width 0.25s ease;
   }
 
-  /* Question Palette / Indicator Matrix */
-  .palette-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #64748b;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .question-palette {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    background: #f1f5f9;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 24px;
+  /* 30-Item All-Visible Grid (10 Columns x 3 Rows) */
+  .palette-grid-wrap {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+    padding: 6px 0 4px;
   }
   .palette-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 6px;
+    height: 25px;
+    border-radius: 4px;
     border: 1px solid var(--border);
-    background: #ffffff;
+    background: #f8fafc;
     color: #475569;
-    font-size: 0.82rem;
+    font-size: 0.72rem;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.15s ease;
     padding: 0;
+    transition: all 0.15s ease;
   }
-  .palette-btn:hover { border-color: var(--primary); }
   .palette-btn.active {
     outline: 2px solid var(--primary);
     outline-offset: 1px;
     color: var(--primary);
+    background: #eff6ff;
     font-weight: 700;
   }
   .palette-btn.answered {
@@ -162,92 +172,103 @@
     outline-offset: 1px;
   }
 
-  /* Question & Options */
+  /* Center Question Area */
+  .question-scroll-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 14px 16px;
+    -webkit-overflow-scrolling: touch;
+  }
   .question-title {
-    font-size: 1.12rem;
+    font-size: 0.98rem;
     font-weight: 600;
-    margin-bottom: 20px;
-    line-height: 1.5;
+    margin-bottom: 12px;
+    line-height: 1.45;
     color: var(--text);
   }
   .option {
-    display: block;
+    display: flex;
+    align-items: center;
     border: 1.5px solid var(--border);
     border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 12px;
+    padding: 11px 13px;
+    margin-bottom: 9px;
     cursor: pointer;
-    transition: all 0.15s ease-in-out;
     background: #ffffff;
+    font-size: 0.88rem;
+    line-height: 1.35;
   }
   .option:hover { background: #f8fafc; border-color: var(--primary); }
-  .option input { margin-right: 12px; transform: scale(1.2); }
+  .option input {
+    margin-right: 10px;
+    transform: scale(1.15);
+    flex-shrink: 0;
+  }
 
-  /* Navigation Buttons */
-  .actions {
+  /* Pinned Bottom Navigation */
+  .pinned-bottom {
+    flex-shrink: 0;
+    background: var(--card);
+    border-top: 1px solid #e2e8f0;
+    padding: 10px 16px;
     display: flex;
     justify-content: space-between;
-    margin-top: 28px;
     gap: 12px;
+    z-index: 10;
   }
   button {
-    padding: 12px 22px;
+    padding: 10px 20px;
     border-radius: 6px;
     border: none;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: background 0.15s;
   }
   .btn-prev { background: #e2e8f0; color: #334155; }
-  .btn-prev:hover:not(:disabled) { background: #cbd5e1; }
-  .btn-prev:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-prev:disabled { opacity: 0.35; cursor: not-allowed; }
   .btn-next { background: var(--primary); color: white; }
-  .btn-next:hover { background: var(--primary-hover); }
-  .btn-submit { background: var(--success); color: white; }
-  .btn-submit:hover { background: #15803d; }
+  .btn-submit { background: var(--success); color: white; display: none; }
 
-  /* Modal Dialog for Unanswered Alerts */
+  /* ---------------- MODAL / RESULT ---------------- */
   .modal-overlay {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(15, 23, 42, 0.6);
     display: none;
     align-items: center;
     justify-content: center;
+    padding: 16px;
     z-index: 1000;
   }
   .modal {
     background: #ffffff;
-    width: 90%;
-    max-width: 500px;
-    padding: 26px;
+    width: 100%;
+    max-width: 440px;
+    padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
-    text-align: left;
   }
-  .modal h3 { margin-top: 0; color: #b45309; }
-  .modal p { line-height: 1.5; font-size: 0.95rem; color: #475569; }
+  .modal h3 { margin-top: 0; color: #b45309; font-size: 1.05rem; }
+  .modal p { font-size: 0.88rem; line-height: 1.45; color: #475569; }
   .modal .unanswered-list {
     background: #fef3c7;
     border: 1px solid #fde68a;
-    padding: 12px;
+    padding: 10px;
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #92400e;
-    max-height: 120px;
+    max-height: 90px;
     overflow-y: auto;
-    margin: 14px 0;
+    margin: 12px 0;
     font-weight: 600;
   }
-  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
   .btn-secondary { background: #e2e8f0; color: #334155; }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <!-- START SCREEN -->
+<div class="app-container">
+  <!-- 1. START SCREEN -->
   <div id="start-screen">
     <div class="school-title">
       <h2>MORENO INTEGRATED SCHOOL</h2>
@@ -266,51 +287,50 @@
     <div class="name-grid">
       <div class="input-group">
         <label for="first-name">First Name</label>
-        <input type="text" id="first-name" class="input-field" placeholder="e.g. Juan" required>
+        <input type="text" id="first-name" class="input-field" required>
       </div>
       <div class="input-group">
         <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" class="input-field" placeholder="e.g. Dela Cruz" required>
+        <input type="text" id="last-name" class="input-field" required>
       </div>
     </div>
 
-    <button class="btn-next" style="width: 100%; margin-top: 10px;" onclick="startExam()">Start Test Now</button>
+    <button class="btn-next" style="width: 100%; margin-top: 8px; padding: 12px;" onclick="startExam()">Start Test Now</button>
   </div>
 
-  <!-- EXAM SCREEN -->
+  <!-- 2. EXAM SCREEN -->
   <div id="exam-screen" style="display:none;">
-    <div class="header">
-      <span class="progress-info" id="progress-indicator">Question 1 of 30</span>
-      <span class="timer" id="timer-display">30:00</span>
+    <!-- PINNED TOP: Header, Progress Bar, 30-Item All-Visible Grid -->
+    <div class="pinned-top">
+      <div class="header-row">
+        <span class="progress-info" id="progress-indicator">Question 1 of 30</span>
+        <span class="timer" id="timer-display">30:00</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+      <div class="palette-grid-wrap" id="question-palette"></div>
     </div>
 
-    <div class="progress-bar-container">
-      <div class="progress-bar-fill" id="progress-bar"></div>
-    </div>
+    <!-- MIDDLE: Question & Options (Internal Scroll Only) -->
+    <div class="question-scroll-body" id="question-container"></div>
 
-    <div class="palette-title">
-      <span>Question Tracker:</span>
-      <span id="answered-count-display">0 of 30 Answered</span>
-    </div>
-    <div class="question-palette" id="question-palette"></div>
-
-    <div id="question-container"></div>
-
-    <div class="actions">
+    <!-- PINNED BOTTOM: Action Buttons -->
+    <div class="pinned-bottom">
       <button class="btn-prev" id="btn-prev" onclick="prevQuestion()" disabled>Previous</button>
-      <div style="display:flex; gap: 10px;">
+      <div>
         <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next</button>
         <button class="btn-submit" id="btn-submit" onclick="confirmSubmission()">Submit Exam</button>
       </div>
     </div>
   </div>
 
-  <!-- RESULT SCREEN -->
-  <div id="result-screen" style="display:none; text-align: center;">
+  <!-- 3. RESULT SCREEN -->
+  <div id="result-screen" style="display:none; padding: 30px 20px; text-align: center; margin: auto;">
     <div class="school-title">
       <h2>Exam Completed</h2>
     </div>
-    <p id="submission-message" style="font-size: 1.1rem; line-height: 1.6;">Transmitting responses to the grading sheet, please wait...</p>
+    <p id="submission-message" style="font-size: 1rem; line-height: 1.6;">Transmitting responses to the grading sheet, please wait...</p>
   </div>
 </div>
 
@@ -321,8 +341,8 @@
     <p id="modal-desc">You have skipped or missed questions. Are you sure you want to finalize your test?</p>
     <div class="unanswered-list" id="unanswered-list"></div>
     <div class="modal-actions">
-      <button class="btn-secondary" onclick="closeModal()">Go Back & Answer</button>
-      <button class="btn-submit" onclick="executeFinalSubmit()">Submit Anyway</button>
+      <button class="btn-secondary" onclick="closeModal()">Go Back</button>
+      <button class="btn-submit" style="display:inline-block;" onclick="executeFinalSubmit()">Submit Anyway</button>
     </div>
   </div>
 </div>
@@ -370,19 +390,25 @@ let randomizedQuestions = [];
 let currentIndex = 0;
 let userAnswers = {};
 let fullName = "";
-let timeLeft = 30 * 60; // 30 minutes in seconds
+let timeLeft = 30 * 60;
 let timerInterval = null;
 let tabSwitches = 0;
 
-// Anti-Cheat Window Monitor
-window.addEventListener("blur", () => {
-  if (document.getElementById("exam-screen").style.display === "block") {
+// Universal Anti-Cheat Trackers (Mobile & Desktop)
+function recordUnfocusedEvent() {
+  if (document.getElementById("exam-screen").style.display === "flex") {
     tabSwitches++;
-    console.warn("Window blur detected: " + tabSwitches);
+  }
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    recordUnfocusedEvent();
   }
 });
+window.addEventListener("pagehide", recordUnfocusedEvent);
+window.addEventListener("blur", recordUnfocusedEvent);
 
-// Randomize array order
 function shuffleArray(arr) {
   const array = [...arr];
   for (let i = array.length - 1; i > 0; i--) {
@@ -401,11 +427,11 @@ function startExam() {
     return;
   }
   
-  fullName = `${lastName}, ${firstName}`;
+  fullName = lastName + ", " + firstName;
   randomizedQuestions = shuffleArray(QUESTIONS);
   
   document.getElementById("start-screen").style.display = "none";
-  document.getElementById("exam-screen").style.display = "block";
+  document.getElementById("exam-screen").style.display = "flex";
   
   buildPalette();
   renderQuestion();
@@ -418,7 +444,7 @@ function startTimer() {
     const mins = Math.floor(timeLeft / 60);
     const secs = timeLeft % 60;
     document.getElementById("timer-display").textContent = 
-      `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      mins.toString().padStart(2, '0') + ":" + secs.toString().padStart(2, '0');
       
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
@@ -435,8 +461,8 @@ function buildPalette() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "palette-btn";
-    btn.id = `palette-btn-${i}`;
-    btn.textContent = i + 1;
+    btn.id = "palette-btn-" + i;
+    btn.textContent = (i + 1).toString();
     btn.onclick = () => jumpToQuestion(i);
     container.appendChild(btn);
   }
@@ -446,7 +472,7 @@ function updatePaletteAndProgress() {
   let answeredCount = 0;
   for (let i = 0; i < randomizedQuestions.length; i++) {
     const q = randomizedQuestions[i];
-    const btn = document.getElementById(`palette-btn-${i}`);
+    const btn = document.getElementById("palette-btn-" + i);
     
     btn.className = "palette-btn";
     if (userAnswers[q.id]) {
@@ -460,32 +486,35 @@ function updatePaletteAndProgress() {
 
   const total = randomizedQuestions.length;
   const pct = (answeredCount / total) * 100;
-  document.getElementById("progress-bar").style.width = `${pct}%`;
-  document.getElementById("answered-count-display").textContent = `${answeredCount} of ${total} Answered`;
+  document.getElementById("progress-bar").style.width = pct + "%";
+  document.getElementById("progress-indicator").textContent = 
+    `Question ${currentIndex + 1} of ${total} (${answeredCount} answered)`;
 }
 
 function renderQuestion() {
   const qData = randomizedQuestions[currentIndex];
-  document.getElementById("progress-indicator").textContent = `Question ${currentIndex + 1} of 30`;
   
-  let html = `<div class="question-title">${currentIndex + 1}. ${qData.q}</div>`;
+  let html = '<div class="question-title">' + (currentIndex + 1) + '. ' + qData.q + '</div>';
   for (const [key, val] of Object.entries(qData.options)) {
     const isChecked = userAnswers[qData.id] === key ? "checked" : "";
-    html += `
-      <label class="option">
-        <input type="radio" name="option" value="${key}" ${isChecked} onchange="saveAnswer(${qData.id}, '${key}')">
-        <strong>${key.toUpperCase()}.</strong> ${val}
-      </label>
-    `;
+    html += '<label class="option">' +
+      '<input type="radio" name="option" value="' + key + '" ' + isChecked + ' onchange="saveAnswer(' + qData.id + ', \'' + key + '\')"> ' +
+      '<span><strong>' + key.toUpperCase() + '.</strong> ' + val + '</span>' +
+      '</label>';
   }
-  document.getElementById("question-container").innerHTML = html;
+  
+  const container = document.getElementById("question-container");
+  container.innerHTML = html;
+  container.scrollTop = 0;
   
   document.getElementById("btn-prev").disabled = currentIndex === 0;
   
   if (currentIndex === randomizedQuestions.length - 1) {
     document.getElementById("btn-next").style.display = "none";
+    document.getElementById("btn-submit").style.display = "inline-block";
   } else {
     document.getElementById("btn-next").style.display = "inline-block";
+    document.getElementById("btn-submit").style.display = "none";
   }
 
   updatePaletteAndProgress();
@@ -527,9 +556,9 @@ function confirmSubmission() {
   if (unanswered.length > 0) {
     document.getElementById("modal-title").textContent = "Unanswered Questions Remaining";
     document.getElementById("modal-desc").textContent = 
-      `You currently have ${unanswered.length} unanswered or skipped question(s). Are you sure you want to finalize your submission?`;
+      "You currently have " + unanswered.length + " unanswered or skipped question(s). Are you sure you want to finalize your submission?";
     document.getElementById("unanswered-list").innerHTML = 
-      `Skipped Question Numbers: <strong>${unanswered.join(", ")}</strong>`;
+      "Skipped Question Numbers: <strong>" + unanswered.join(", ") + "</strong>";
     document.getElementById("submission-modal").style.display = "flex";
   } else {
     document.getElementById("modal-title").textContent = "Ready to Submit?";
@@ -570,7 +599,7 @@ function executeFinalSubmit() {
     body: JSON.stringify(payload)
   }).then(() => {
     document.getElementById("submission-message").innerHTML = 
-      `Test submitted successfully, <strong>${fullName}</strong>!<br>Your Total Score: <strong>${score} / 30</strong>.<br><br>You may now close this window.`;
+      "Test submitted successfully, <strong>" + fullName + "</strong>!<br>Your Total Score: <strong>" + score + " / 30</strong>.<br><br>You may now close this window.";
   }).catch(err => {
     document.getElementById("submission-message").textContent = 
       "Network connection error during submission. Please notify your proctor before closing this window.";
