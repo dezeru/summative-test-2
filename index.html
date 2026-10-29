@@ -18,257 +18,145 @@
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
   html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    height: 100dvh;
-    background: var(--bg);
-    color: var(--text);
+    margin: 0; padding: 0; width: 100%; height: 100%; height: 100dvh;
+    background: var(--bg); color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     overflow: hidden;
+    user-select: none; /* Disables text selection/copying */
   }
 
   .app-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    height: 100dvh;
-    max-width: 600px;
-    margin: 0 auto;
-    background: var(--card);
-    position: relative;
+    display: flex; flex-direction: column;
+    height: 100%; height: 100dvh; max-width: 600px;
+    margin: 0 auto; background: var(--card); position: relative;
   }
 
   /* ---------------- START SCREEN ---------------- */
   #start-screen {
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
+    padding: 20px; overflow-y: auto; display: flex;
+    flex-direction: column; justify-content: center; height: 100%;
   }
-  .school-title { text-align: center; margin-bottom: 16px; }
+  .school-title { text-align: center; margin-bottom: 14px; }
   .school-title h2 { margin: 0; color: var(--primary); font-size: 1.2rem; }
   .school-title p { margin: 4px 0 0; color: #64748b; font-size: 0.88rem; }
 
   .instructions-box {
-    background: #f8fafc;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 16px;
-    margin: 14px 0;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: #334155;
+    background: #f8fafc; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; margin: 12px 0;
+    font-size: 0.85rem; line-height: 1.5; color: #334155;
   }
   .instructions-box ul { margin: 6px 0 0 16px; padding: 0; }
   .instructions-box li { margin-bottom: 4px; }
 
-  .name-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 14px 0;
+  .auth-box {
+    background: #ffffff; border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 16px; margin: 12px 0;
   }
-  .input-group label { display: block; font-size: 0.8rem; font-weight: 600; color: #475569; margin-bottom: 4px; }
+  .input-group { margin-bottom: 12px; text-align: left; }
+  .input-group label { display: block; font-size: 0.82rem; font-weight: 600; color: #475569; margin-bottom: 4px; }
   .input-field {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.95rem;
-    outline: none;
+    width: 100%; padding: 11px 12px; border: 1.5px solid var(--border);
+    border-radius: 6px; font-size: 0.95rem; outline: none; background: #ffffff;
   }
   .input-field:focus { border-color: var(--primary); }
 
-  /* ---------------- EXAM SCREEN (PINNED LAYOUT) ---------------- */
+  /* ---------------- EXAM SCREEN ---------------- */
   #exam-screen {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    height: 100dvh;
-    overflow: hidden;
+    display: flex; flex-direction: column;
+    height: 100%; height: 100dvh; overflow: hidden;
   }
 
-  /* Pinned Top Bar */
   .pinned-top {
-    flex-shrink: 0;
-    background: var(--card);
-    padding: 10px 14px 6px;
-    border-bottom: 1px solid #e2e8f0;
-    z-index: 10;
+    flex-shrink: 0; background: var(--card);
+    padding: 10px 14px 6px; border-bottom: 1px solid #e2e8f0; z-index: 10;
   }
   .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
   }
   .timer {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--danger);
-    background: #fee2e2;
-    padding: 3px 9px;
-    border-radius: 9999px;
-    letter-spacing: 0.05em;
+    font-size: 0.95rem; font-weight: 700; color: var(--danger);
+    background: #fee2e2; padding: 3px 9px; border-radius: 9999px; letter-spacing: 0.05em;
   }
   .progress-info { font-weight: 600; color: #475569; font-size: 0.82rem; }
 
-  /* Linear Progress Bar */
   .progress-bar-container {
-    width: 100%;
-    height: 6px;
-    background-color: #e2e8f0;
-    border-radius: 9999px;
-    overflow: hidden;
-    margin-bottom: 8px;
+    width: 100%; height: 6px; background-color: #e2e8f0;
+    border-radius: 9999px; overflow: hidden; margin-bottom: 8px;
   }
   .progress-bar-fill {
-    height: 100%;
-    width: 0%;
-    background-color: var(--primary);
-    transition: width 0.25s ease;
+    height: 100%; width: 0%; background-color: var(--primary); transition: width 0.25s ease;
   }
 
-  /* 30-Item All-Visible Grid (10 Columns x 3 Rows) */
   .palette-grid-wrap {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 4px;
-    padding: 4px 0 2px;
+    display: grid; grid-template-columns: repeat(10, 1fr);
+    gap: 4px; padding: 4px 0 2px;
   }
   .palette-btn {
-    height: 25px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    background: #f8fafc;
-    color: #475569;
-    font-size: 0.72rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: all 0.15s ease;
+    height: 25px; border-radius: 4px; border: 1px solid var(--border);
+    background: #f8fafc; color: #475569; font-size: 0.72rem; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    padding: 0; transition: all 0.15s ease;
   }
   .palette-btn.active {
-    outline: 2px solid var(--primary);
-    outline-offset: 1px;
-    color: var(--primary);
-    background: #eff6ff;
-    font-weight: 700;
+    outline: 2px solid var(--primary); outline-offset: 1px;
+    color: var(--primary); background: #eff6ff; font-weight: 700;
   }
   .palette-btn.answered {
-    background: var(--success);
-    color: #ffffff;
-    border-color: var(--success);
+    background: var(--success); color: #ffffff; border-color: var(--success);
   }
-  .palette-btn.answered.active {
-    outline: 2px solid #064e3b;
-    outline-offset: 1px;
-  }
+  .palette-btn.answered.active { outline: 2px solid #064e3b; outline-offset: 1px; }
 
-  /* Center Question Area */
   .question-scroll-body {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    padding: 14px 16px;
-    -webkit-overflow-scrolling: touch;
+    flex: 1 1 auto; overflow-y: auto; padding: 14px 16px; -webkit-overflow-scrolling: touch;
   }
   .question-title {
-    font-size: 0.98rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-    line-height: 1.45;
-    color: var(--text);
+    font-size: 0.98rem; font-weight: 600; margin-bottom: 12px; line-height: 1.45; color: var(--text);
   }
   .option {
-    display: flex;
-    align-items: center;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 11px 13px;
-    margin-bottom: 9px;
-    cursor: pointer;
-    background: #ffffff;
-    font-size: 0.88rem;
-    line-height: 1.35;
+    display: flex; align-items: center; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 11px 13px; margin-bottom: 9px;
+    cursor: pointer; background: #ffffff; font-size: 0.88rem; line-height: 1.35;
   }
   .option:hover { background: #f8fafc; border-color: var(--primary); }
-  .option input {
-    margin-right: 10px;
-    transform: scale(1.15);
-    flex-shrink: 0;
-  }
+  .option input { margin-right: 10px; transform: scale(1.15); flex-shrink: 0; }
 
-  /* Pinned Bottom Navigation */
   .pinned-bottom {
-    flex-shrink: 0;
-    background: var(--card);
-    border-top: 1px solid #e2e8f0;
-    padding: 10px 16px;
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    z-index: 10;
+    flex-shrink: 0; background: var(--card); border-top: 1px solid #e2e8f0;
+    padding: 10px 16px; display: flex; justify-content: space-between; gap: 12px; z-index: 10;
   }
   button {
-    padding: 10px 20px;
-    border-radius: 6px;
-    border: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
+    padding: 10px 20px; border-radius: 6px; border: none;
+    font-weight: 600; font-size: 0.9rem; cursor: pointer;
   }
   .btn-prev { background: #e2e8f0; color: #334155; }
   .btn-prev:disabled { opacity: 0.35; cursor: not-allowed; }
   .btn-next { background: var(--primary); color: white; }
   .btn-submit { background: var(--success); color: white; display: none; }
 
-  /* ---------------- MODAL / RESULT ---------------- */
+  /* Modal */
   .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.6);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    z-index: 1000;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.6); display: none;
+    align-items: center; justify-content: center; padding: 16px; z-index: 1000;
   }
   .modal {
-    background: #ffffff;
-    width: 100%;
-    max-width: 440px;
-    padding: 20px;
-    border-radius: 12px;
+    background: #ffffff; width: 100%; max-width: 440px; padding: 20px; border-radius: 12px;
   }
   .modal h3 { margin-top: 0; color: #b45309; font-size: 1.05rem; }
   .modal p { font-size: 0.88rem; line-height: 1.45; color: #475569; }
   .modal .unanswered-list {
-    background: #fef3c7;
-    border: 1px solid #fde68a;
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    color: #92400e;
-    max-height: 90px;
-    overflow-y: auto;
-    margin: 12px 0;
-    font-weight: 600;
+    background: #fef3c7; border: 1px solid #fde68a; padding: 10px;
+    border-radius: 6px; font-size: 0.85rem; color: #92400e;
+    max-height: 90px; overflow-y: auto; margin: 12px 0; font-weight: 600;
   }
   .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
   .btn-secondary { background: #e2e8f0; color: #334155; }
 </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
 <div class="app-container">
-  <!-- 1. START SCREEN -->
+  <!-- START SCREEN -->
   <div id="start-screen">
     <div class="school-title">
       <h2>MORENO INTEGRATED SCHOOL</h2>
@@ -276,31 +164,60 @@
     </div>
     
     <div class="instructions-box">
-      <strong>Exam Rules & Conditions:</strong>
+      <strong>Exam Conditions & Rules:</strong>
       <ul>
-        <li><strong>Time Limit:</strong> Exactly 30 minutes from the moment you click Start.</li>
-        <li><strong>Auto-Submit:</strong> Once 30 minutes expire, responses submit automatically.</li>
-        <li><strong>System Note:</strong> Unfocused window activity, switching browser tabs, or minimizing the test is monitored and recorded by the system.</li>
+        <li><strong>Identity:</strong> Select your official name and enter your assigned PIN. Only one (1) attempt is permitted.</li>
+        <li><strong>Time Limit:</strong> Exactly 30 minutes. The exam automatically submits when time expires.</li>
+        <li><strong>Integrity:</strong> Switching tabs, minimizing, or leaving the screen is monitored and recorded.</li>
       </ul>
     </div>
-    
-    <div class="name-grid">
-      <div class="input-group">
-        <label for="first-name">First Name</label>
-        <input type="text" id="first-name" class="input-field" required>
-      </div>
-      <div class="input-group">
-        <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" class="input-field" required>
-      </div>
-    </div>
 
-    <button class="btn-next" style="width: 100%; margin-top: 8px; padding: 12px;" onclick="startExam()">Start Test Now</button>
+    <!-- Dropdown and Passcode Verification Box -->
+    <div class="auth-box">
+      <div class="input-group">
+        <label for="student-select">Student Name (Grade 12 - Resourceful)</label>
+        <select id="student-select" class="input-field">
+          <option value="" disabled selected>-- Select your name --</option>
+          <option value="ABARCA, RENZ PATRICK">ABARCA, RENZ PATRICK</option>
+          <option value="ABASOLO, ARJAY">ABASOLO, ARJAY</option>
+          <option value="ASIS, KYLE NEO">ASIS, KYLE NEO</option>
+          <option value="BALANE, MARC JARRED">BALANE, MARC JARRED</option>
+          <option value="CANOUA, ARVE">CANOUA, ARVE</option>
+          <option value="CAPUZ, HENJIE JR.">CAPUZ, HENJIE JR.</option>
+          <option value="CARSON, DAMIEN ETHAN KURT">CARSON, DAMIEN ETHAN KURT</option>
+          <option value="CARSON, JARED KURT">CARSON, JARED KURT</option>
+          <option value="CLEOFE, JOSEPH">CLEOFE, JOSEPH</option>
+          <option value="DINGUINBAYAN, LANCE ZEDRICK">DINGUINBAYAN, LANCE ZEDRICK</option>
+          <option value="FUERTEZ, GIMMUEL">FUERTEZ, GIMMUEL</option>
+          <option value="GRABATO, JOSH ALJOM">GRABATO, JOSH ALJOM</option>
+          <option value="IBITA, MIGUEL">IBITA, MIGUEL</option>
+          <option value="JAVIER, VAL CHRISTOPHER">JAVIER, VAL CHRISTOPHER</option>
+          <option value="LAMPITAO, BRIAN-JAY">LAMPITAO, BRIAN-JAY</option>
+          <option value="MIGUEL, KURT RUSSEL">MIGUEL, KURT RUSSEL</option>
+          <option value="OSIO, RIZALDO">OSIO, RIZALDO</option>
+          <option value="POLINAG, JOHN RONALD">POLINAG, JOHN RONALD</option>
+          <option value="ABANES, ASHLEY">ABANES, ASHLEY</option>
+          <option value="ALBERTO, MARIAN">ALBERTO, MARIAN</option>
+          <option value="ALTAMERA, SHAIRAJOY">ALTAMERA, SHAIRAJOY</option>
+          <option value="IBASCO, KEAVY DAIRE">IBASCO, KEAVY DAIRE</option>
+          <option value="MERCADO, HEART JOY">MERCADO, HEART JOY</option>
+          <option value="PAOR, KEAH MAE">PAOR, KEAH MAE</option>
+          <option value="RAVIS, JOVELY">RAVIS, JOVELY</option>
+          <option value="VECIDA, DIANNE">VECIDA, DIANNE</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="student-pin">Passcode / PIN</label>
+        <input type="password" id="student-pin" class="input-field" placeholder="Enter your 4-digit PIN" required>
+      </div>
+
+      <button class="btn-next" id="btn-start" style="width: 100%; margin-top: 6px; padding: 12px;" onclick="validateAndStart()">Start Test Now</button>
+    </div>
   </div>
 
-  <!-- 2. EXAM SCREEN -->
+  <!-- EXAM SCREEN -->
   <div id="exam-screen" style="display:none;">
-    <!-- PINNED TOP -->
     <div class="pinned-top">
       <div class="header-row">
         <span class="progress-info" id="progress-indicator">Question 1 of 30</span>
@@ -312,10 +229,8 @@
       <div class="palette-grid-wrap" id="question-palette"></div>
     </div>
 
-    <!-- MIDDLE: Question Container (Safe DOM Rendering) -->
     <div class="question-scroll-body" id="question-container"></div>
 
-    <!-- PINNED BOTTOM -->
     <div class="pinned-bottom">
       <button class="btn-prev" id="btn-prev" onclick="prevQuestion()" disabled>Previous</button>
       <div>
@@ -325,7 +240,7 @@
     </div>
   </div>
 
-  <!-- 3. RESULT SCREEN -->
+  <!-- RESULT SCREEN -->
   <div id="result-screen" style="display:none; padding: 30px 20px; text-align: center; margin: auto;">
     <div class="school-title">
       <h2>Exam Completed</h2>
@@ -334,11 +249,11 @@
   </div>
 </div>
 
-<!-- Modal for Unanswered Alert -->
+<!-- Modal Dialog -->
 <div class="modal-overlay" id="submission-modal">
   <div class="modal">
     <h3 id="modal-title">Unanswered Questions Remaining</h3>
-    <p id="modal-desc">You have skipped or missed questions. Are you sure you want to finalize your test?</p>
+    <p id="modal-desc">You currently have skipped or unanswered questions. Are you sure you want to finalize your submission?</p>
     <div class="unanswered-list" id="unanswered-list"></div>
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal()">Go Back</button>
@@ -350,362 +265,69 @@
 <script>
 // ============================================================================
 // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx64vRes50Y6ouXGUWBMGv-00x9fHhhcFlZc52LO8Lb20TjArJvPgBFV1kLIr5kRGB2/exec";
+const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
 // ============================================================================
 
-// All 30 items verified against the test document
+// NO ANSWERS STORED HERE - Even if students inspect, there is nothing to find
 const QUESTIONS = [
-  {
-    id: 1,
-    q: "What HTML tag is historically used to define a specific window frame within a frameset document?",
-    options: {
-      a: "<frame> element tag",
-      b: "<panel> element tag",
-      c: "<block> element tag",
-      d: "<split> element tag"
-    },
-    ans: "a"
-  },
-  {
-    id: 2,
-    q: "Why is the action attribute necessary within an HTML <form> element definition?",
-    options: {
-      a: "It defines the visual styling applied to the form inputs.",
-      b: "It specifies where to send data when the form is submitted.",
-      c: "It determines the input data types allowed for the user.",
-      d: "It restricts the maximum character limit for the inputs."
-    },
-    ans: "b"
-  },
-  {
-    id: 3,
-    q: "What does the acronym \"CSS\" stand for in the context of standard web development?",
-    options: {
-      a: "Computer Styled Sheets",
-      b: "Creative Style Systems",
-      c: "Cascading Style Sheets",
-      d: "Custom Styling Scripts"
-    },
-    ans: "c"
-  },
-  {
-    id: 4,
-    q: "Which character is used in CSS to specifically target an element by its id attribute?",
-    options: {
-      a: "The asterisk symbol (*)",
-      b: "The period character (.)",
-      c: "The tilde character (~)",
-      d: "The hashtag symbol (#)"
-    },
-    ans: "d"
-  },
-  {
-    id: 5,
-    q: "In CSS, what is the primary structural difference between a class selector and an ID selector?",
-    options: {
-      a: "A class applies to multiple elements, while an ID must be unique.",
-      b: "A class is only for typography, while an ID is for page structure.",
-      c: "A class is targeted with a hashtag (#), while an ID uses a dot (.).",
-      d: "A class always has a higher specificity priority than an ID selector."
-    },
-    ans: "a"
-  },
-  {
-    id: 6,
-    q: "Which CSS property is used to change the text color of an HTML element on the page?",
-    options: {
-      a: "font-color",
-      b: "color",
-      c: "text-color",
-      d: "font-style"
-    },
-    ans: "b"
-  },
-  {
-    id: 7,
-    q: "Which CSS snippet will successfully center-align all paragraphs and make the text bold?",
-    options: {
-      a: "p { text-align: middle; font-weight: strong; }",
-      b: "p { text-align: center; text-weight: bolder; }",
-      c: "p { text-align: center; font-weight: bold; }",
-      d: "p { align-text: center; font-style: heavy; }"
-    },
-    ans: "c"
-  },
-  {
-    id: 8,
-    q: "How do you apply a 50% transparent background color without affecting the text opacity?",
-    options: {
-      a: "background-color: black; opacity: 0.5;",
-      b: "background: solid black; transparent: 50%;",
-      c: "color: rgba(0, 0, 0, 0.5); opacity: none;",
-      d: "background-color: rgba(0, 0, 0, 0.5);"
-    },
-    ans: "d"
-  },
-  {
-    id: 9,
-    q: "According to the CSS box model, what is the role of the padding property?",
-    options: {
-      a: "It creates space between the content and the element border.",
-      b: "It creates space outside the border separating other blocks.",
-      c: "It defines the visible outline surrounding the element body.",
-      d: "It establishes the exact width and height of the container."
-    },
-    ans: "a"
-  },
-  {
-    id: 10,
-    q: "Which CSS declaration sets 10px margin on the top and bottom, and 20px on the left and right?",
-    options: {
-      a: "margin: 20px 10px;",
-      b: "margin: 10px 20px;",
-      c: "margin: 10px, 20px;",
-      d: "margin: 20px, 10px;"
-    },
-    ans: "b"
-  },
-  {
-    id: 11,
-    q: "If a div element has width: 100px, padding: 10px, and border: 5px, what is its total width?",
-    options: {
-      a: "100px",
-      b: "110px",
-      c: "120px",
-      d: "130px"
-    },
-    ans: "d"
-  },
-  {
-    id: 12,
-    q: "Which CSS property removes the default underline styling from an HTML hyperlink tag?",
-    options: {
-      a: "text-style: none;",
-      b: "text-format: none;",
-      c: "link-style: none;",
-      d: "text-decoration: none;"
-    },
-    ans: "d"
-  },
-  {
-    id: 13,
-    q: "What is the visual effect of setting list-style-type: none; on a <ul> element?",
-    options: {
-      a: "The standard bullet points preceding list items are hidden.",
-      b: "The hierarchical indentation of the list is fully removed.",
-      c: "The list items are displayed horizontally across the page.",
-      d: "The entire unordered list becomes invisible to web users."
-    },
-    ans: "a"
-  },
-  {
-    id: 14,
-    q: "Which property combination ensures a navigation bar stays fixed at the screen's top when scrolling?",
-    options: {
-      a: "position: sticky; z-index: 1;",
-      b: "position: fixed; top: 0px;",
-      c: "position: absolute; top: 0;",
-      d: "position: static; float: top;"
-    },
-    ans: "b"
-  },
-  {
-    id: 15,
-    q: "If you apply position: relative; top: 20px; to an element, how will it visually behave on the web page?",
-    options: {
-      a: "It moves 20px down from its normal position without affecting surrounding elements.",
-      b: "It moves 20px up from the bottom of the entire web page.",
-      c: "It pushes all surrounding elements 20px further down the page.",
-      d: "It snaps directly to the top edge of the user's browser window."
-    },
-    ans: "a"
-  },
-  {
-    id: 16,
-    q: "Which CSS pseudo-class specifically targets a hyperlink when the user's mouse pointer is over it?",
-    options: {
-      a: "a:active",
-      b: "a:visited",
-      c: "a:selected",
-      d: "a:hover"
-    },
-    ans: "d"
-  },
-  {
-    id: 17,
-    q: "Which CSS property is required on a container element to activate the Flexbox",
-    options: {
-      a: "display: flex;",
-      b: "layout: flex;",
-      c: "display: block;",
-      d: "flex-box: true;"
-    },
-    ans: "a"
-  },
-  {
-    id: 18,
-    q: "Which flexbox property centers items horizontally along the main axis of a flex container?",
-    options: {
-      a: "align-items: center;",
-      b: "justify-content: center;",
-      c: "align-content: center;",
-      d: "flex-direction: center;"
-    },
-    ans: "b"
-  },
-  {
-    id: 19,
-    q: "You need to build a row of flex items that wraps to the next line when space runs out. Which rule does this?",
-    options: {
-      a: "flex-direction: row-wrap;",
-      b: "display: grid-wrap;",
-      c: "flex-wrap: wrap;",
-      d: "layout-wrap: true;"
-    },
-    ans: "c"
-  },
-  {
-    id: 20,
-    q: "What is the primary purpose of using media queries in Responsive Web Development?",
-    options: {
-      a: "To play audio and video files directly in the browser.",
-      b: "To compress high-resolution images for faster loading.",
-      c: "To structure the HTML document into semantic sections.",
-      d: "To apply different CSS styles based on screen dimensions."
-    },
-    ans: "d"
-  },
-  {
-    id: 21,
-    q: "You wrote @media (max-width: 600px). Why are the enclosed styles NOT applying on a 500px mobile screen?",
-    options: {
-      a: "The viewport meta tag is likely missing from the HTML head.",
-      b: "The media query is placed before the standard desktop CSS.",
-      c: "Max-width only triggers when screens are exactly 600 pixels.",
-      d: "The browser requires a minimum width for media directives."
-    },
-    ans: "a"
-  },
-  {
-    id: 22,
-    q: "Which code snippet creates a responsive layout that changes from two columns to one column on mobile screens?",
-    options: {
-      a: ".col { width: 50%; } @media (min-width: 600px) { .col { width: 100%; } }",
-      b: ".col { width: 50%; } @media (max-width: 600px) { .col { width: 100%; } }",
-      c: ".col { width: 100%; } @media (max-width: 600px) { .col { width: 50%; } }",
-      d: ".col { width: 50%; } @media (max-width: 600px) { .col { width: 50%; } }"
-    },
-    ans: "b"
-  },
-  {
-    id: 23,
-    q: "What is the correct HTML tag to insert JavaScript code directly into a standard web page?",
-    options: {
-      a: "<javascript>",
-      b: "<js-code>",
-      c: "<script>",
-      d: "<code>"
-    },
-    ans: "c"
-  },
-  {
-    id: 24,
-    q: "In a standard computational flowchart diagram, what does a diamond-shaped symbol represent?",
-    options: {
-      a: "Data Input/Output",
-      b: "Process/Operation",
-      c: "Start/End point",
-      d: "Decision/Branching"
-    },
-    ans: "d"
-  },
-  {
-    id: 25,
-    q: "What is the primary purpose of writing pseudocode before writing actual programming syntax?",
-    options: {
-      a: "To plan the logic in plain text before writing syntax.",
-      b: "To execute a faster compiled version of the software.",
-      c: "To style the visual interface components of the page.",
-      d: "To automatically generate HTML structures for the site."
-    },
-    ans: "a"
-  },
-  {
-    id: 26,
-    q: "Which JavaScript keyword is used to declare a variable whose assigned value cannot be changed or reassigned?",
-    options: {
-      a: "var",
-      b: "const",
-      c: "let",
-      d: "static"
-    },
-    ans: "b"
-  },
-  {
-    id: 27,
-    q: "What specific JavaScript data type is represented by the literal value true?",
-    options: {
-      a: "String",
-      b: "Number",
-      c: "Boolean",
-      d: "Object"
-    },
-    ans: "c"
-  },
-  {
-    id: 28,
-    q: "Which option shows the correct syntax for declaring a standard reusable function in JavaScript?",
-    options: {
-      a: "function:myFunction() { }",
-      b: "create myFunction() { }",
-      c: "def myFunction() { }",
-      d: "function myFunction() { }"
-    },
-    ans: "d"
-  },
-  {
-    id: 29,
-    q: "Which JavaScript operator is used to check if two variables are strictly equal in both value and data type?",
-    options: {
-      a: "===",
-      b: "==",
-      c: "=",
-      d: "!=="
-    },
-    ans: "a"
-  },
-  {
-    id: 30,
-    q: "A student wants to apply a discount if a customer buys more than 5 items OR spends over $100. Which logical operator should complete the code if (items > 5 ___ total > 100)?",
-    options: {
-      a: "&&",
-      b: "||",
-      c: "!!",
-      d: "!="
-    },
-    ans: "b"
-  }
+  { id: 1, q: "What HTML tag is historically used to define a specific window frame within a frameset document?", options: { a: "<frame> element tag", b: "<panel> element tag", c: "<block> element tag", d: "<split> element tag" } },
+  { id: 2, q: "Why is the action attribute necessary within an HTML <form> element definition?", options: { a: "It defines the visual styling applied to the form inputs.", b: "It specifies where to send data when the form is submitted.", c: "It determines the input data types allowed for the user.", d: "It restricts the maximum character limit for the inputs." } },
+  { id: 3, q: "What does the acronym \"CSS\" stand for in the context of standard web development?", options: { a: "Computer Styled Sheets", b: "Creative Style Systems", c: "Cascading Style Sheets", d: "Custom Styling Scripts" } },
+  { id: 4, q: "Which character is used in CSS to specifically target an element by its id attribute?", options: { a: "The asterisk symbol (*)", b: "The period character (.)", c: "The tilde character (~)", d: "The hashtag symbol (#)" } },
+  { id: 5, q: "In CSS, what is the primary structural difference between a class selector and an ID selector?", options: { a: "A class applies to multiple elements, while an ID must be unique.", b: "A class is only for typography, while an ID is for page structure.", c: "A class is targeted with a hashtag (#), while an ID uses a dot (.).", d: "A class always has a higher specificity priority than an ID selector." } },
+  { id: 6, q: "Which CSS property is used to change the text color of an HTML element on the page?", options: { a: "font-color", b: "color", c: "text-color", d: "font-style" } },
+  { id: 7, q: "Which CSS snippet will successfully center-align all paragraphs and make the text bold?", options: { a: "p { text-align: middle; font-weight: strong; }", b: "p { text-align: center; text-weight: bolder; }", c: "p { text-align: center; font-weight: bold; }", d: "p { align-text: center; font-style: heavy; }" } },
+  { id: 8, q: "How do you apply a 50% transparent background color without affecting the text opacity?", options: { a: "background-color: black; opacity: 0.5;", b: "background: solid black; transparent: 50%;", c: "color: rgba(0, 0, 0, 0.5); opacity: none;", d: "background-color: rgba(0, 0, 0, 0.5);" } },
+  { id: 9, q: "According to the CSS box model, what is the role of the padding property?", options: { a: "It creates space between the content and the element border.", b: "It creates space outside the border separating other blocks.", c: "It defines the visible outline surrounding the element body.", d: "It establishes the exact width and height of the container." } },
+  { id: 10, q: "Which CSS declaration sets 10px margin on the top and bottom, and 20px on the left and right?", options: { a: "margin: 20px 10px;", b: "margin: 10px 20px;", c: "margin: 10px, 20px;", d: "margin: 20px, 10px;" } },
+  { id: 11, q: "If a div element has width: 100px, padding: 10px, and border: 5px, what is its total width?", options: { a: "100px", b: "110px", c: "120px", d: "130px" } },
+  { id: 12, q: "Which CSS property removes the default underline styling from an HTML hyperlink tag?", options: { a: "text-style: none;", b: "text-format: none;", c: "link-style: none;", d: "text-decoration: none;" } },
+  { id: 13, q: "What is the visual effect of setting list-style-type: none; on a <ul> element?", options: { a: "The standard bullet points preceding list items are hidden.", b: "The hierarchical indentation of the list is fully removed.", c: "The list items are displayed horizontally across the page.", d: "The entire unordered list becomes invisible to web users." } },
+  { id: 14, q: "Which property combination ensures a navigation bar stays fixed at the screen's top when scrolling?", options: { a: "position: sticky; z-index: 1;", b: "position: fixed; top: 0px;", c: "position: absolute; top: 0;", d: "position: static; float: top;" } },
+  { id: 15, q: "If you apply position: relative; top: 20px; to an element, how will it visually behave on the web page?", options: { a: "It moves 20px down from its normal position without affecting surrounding elements.", b: "It moves 20px up from the bottom of the entire web page.", c: "It pushes all surrounding elements 20px further down the page.", d: "It snaps directly to the top edge of the user's browser window." } },
+  { id: 16, q: "Which CSS pseudo-class specifically targets a hyperlink when the user's mouse pointer is over it?", options: { a: "a:active", b: "a:visited", c: "a:selected", d: "a:hover" } },
+  { id: 17, q: "Which CSS property is required on a container element to activate the Flexbox", options: { a: "display: flex;", b: "layout: flex;", c: "display: block;", d: "flex-box: true;" } },
+  { id: 18, q: "Which flexbox property centers items horizontally along the main axis of a flex container?", options: { a: "align-items: center;", b: "justify-content: center;", c: "align-content: center;", d: "flex-direction: center;" } },
+  { id: 19, q: "You need to build a row of flex items that wraps to the next line when space runs out. Which rule does this?", options: { a: "flex-direction: row-wrap;", b: "display: grid-wrap;", c: "flex-wrap: wrap;", d: "layout-wrap: true;" } },
+  { id: 20, q: "What is the primary purpose of using media queries in Responsive Web Development?", options: { a: "To play audio and video files directly in the browser.", b: "To compress high-resolution images for faster loading.", c: "To structure the HTML document into semantic sections.", d: "To apply different CSS styles based on screen dimensions." } },
+  { id: 21, q: "You wrote @media (max-width: 600px). Why are the enclosed styles NOT applying on a 500px mobile screen?", options: { a: "The viewport meta tag is likely missing from the HTML head.", b: "The media query is placed before the standard desktop CSS.", c: "Max-width only triggers when screens are exactly 600 pixels.", d: "The browser requires a minimum width for media directives." } },
+  { id: 22, q: "Which code snippet creates a responsive layout that changes from two columns to one column on mobile screens?", options: { a: ".col { width: 50%; } @media (min-width: 600px) { .col { width: 100%; } }", b: ".col { width: 50%; } @media (max-width: 600px) { .col { width: 100%; } }", c: ".col { width: 100%; } @media (max-width: 600px) { .col { width: 50%; } }", d: ".col { width: 50%; } @media (max-width: 600px) { .col { width: 50%; } }" } },
+  { id: 23, q: "What is the correct HTML tag to insert JavaScript code directly into a standard web page?", options: { a: "<javascript>", b: "<js-code>", c: "<script>", d: "<code>" } },
+  { id: 24, q: "In a standard computational flowchart diagram, what does a diamond-shaped symbol represent?", options: { a: "Data Input/Output", b: "Process/Operation", c: "Start/End point", d: "Decision/Branching" } },
+  { id: 25, q: "What is the primary purpose of writing pseudocode before writing actual programming syntax?", options: { a: "To plan the logic in plain text before writing syntax.", b: "To execute a faster compiled version of the software.", c: "To style the visual interface components of the page.", d: "To automatically generate HTML structures for the site." } },
+  { id: 26, q: "Which JavaScript keyword is used to declare a variable whose assigned value cannot be changed or reassigned?", options: { a: "var", b: "const", c: "let", d: "static" } },
+  { id: 27, q: "What specific JavaScript data type is represented by the literal value true?", options: { a: "String", b: "Number", c: "Boolean", d: "Object" } },
+  { id: 28, q: "Which option shows the correct syntax for declaring a standard reusable function in JavaScript?", options: { a: "function:myFunction() { }", b: "create myFunction() { }", c: "def myFunction() { }", d: "function myFunction() { }" } },
+  { id: 29, q: "Which JavaScript operator is used to check if two variables are strictly equal in both value and data type?", options: { a: "===", b: "==", c: "=", d: "!==" } },
+  { id: 30, q: "A student wants to apply a discount if a customer buys more than 5 items OR spends over $100. Which logical operator should complete the code if (items > 5 ___ total > 100)?", options: { a: "&&", b: "||", c: "!!", d: "!=" } }
 ];
 
 let randomizedQuestions = [];
 let currentIndex = 0;
 let userAnswers = {};
 let fullName = "";
+let studentPin = "";
 let timeLeft = 30 * 60;
 let timerInterval = null;
 let tabSwitches = 0;
 
-// Universal Anti-Cheat Trackers (Mobile & Desktop)
+// Block DevTools shortcuts on PC
+document.addEventListener("keydown", (e) => {
+  if (e.key === "F12" || 
+     (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) || 
+     (e.ctrlKey && e.key === "U")) {
+    e.preventDefault();
+  }
+});
+
+// Universal Anti-Cheat Trackers
 function recordUnfocusedEvent() {
   if (document.getElementById("exam-screen").style.display === "flex") {
     tabSwitches++;
   }
 }
-
 document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") {
-    recordUnfocusedEvent();
-  }
+  if (document.visibilityState === "hidden") recordUnfocusedEvent();
 });
 window.addEventListener("pagehide", recordUnfocusedEvent);
 window.addEventListener("blur", recordUnfocusedEvent);
@@ -719,21 +341,50 @@ function shuffleArray(arr) {
   return array;
 }
 
-function startExam() {
-  const firstName = document.getElementById("first-name").value.trim();
-  const lastName = document.getElementById("last-name").value.trim();
-  
-  if (!firstName || !lastName) {
-    alert("Please enter both your First Name and Last Name.");
+function validateAndStart() {
+  const select = document.getElementById("student-select");
+  const selectedName = select.value;
+  const enteredPin = document.getElementById("student-pin").value.trim();
+
+  if (!selectedName) {
+    alert("Please select your name from the roster.");
     return;
   }
-  
-  fullName = lastName + ", " + firstName;
+  if (!enteredPin) {
+    alert("Please enter your 4-digit PIN.");
+    return;
+  }
+
+  fullName = selectedName;
+  studentPin = enteredPin;
+
+  const btn = document.getElementById("btn-start");
+  btn.disabled = true;
+  btn.textContent = "Verifying...";
+
+  // Backend validates PIN and checks for duplicates
+  fetch(`${SCRIPT_URL}?pin=${encodeURIComponent(enteredPin)}&student=${encodeURIComponent(fullName)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data.valid) {
+        alert(data.message || "Invalid credentials.");
+        btn.disabled = false;
+        btn.textContent = "Start Test Now";
+      } else {
+        launchTest();
+      }
+    })
+    .catch(() => {
+      alert("Network error connecting to the grading server. Please check your connection and try again.");
+      btn.disabled = false;
+      btn.textContent = "Start Test Now";
+    });
+}
+
+function launchTest() {
   randomizedQuestions = shuffleArray(QUESTIONS);
-  
   document.getElementById("start-screen").style.display = "none";
   document.getElementById("exam-screen").style.display = "flex";
-  
   buildPalette();
   renderQuestion();
   startTimer();
@@ -792,19 +443,17 @@ function updatePaletteAndProgress() {
     `Question ${currentIndex + 1} of ${total} (${answeredCount} answered)`;
 }
 
-// SAFE TEXT RENDERING: Treats all <tags> and symbols as literal text
+// Safe DOM rendering
 function renderQuestion() {
   const qData = randomizedQuestions[currentIndex];
   const container = document.getElementById("question-container");
-  container.innerHTML = ""; // Empty container cleanly
+  container.innerHTML = "";
   
-  // 1. Question Title (renders <form>, <ul>, etc. as literal text)
   const titleDiv = document.createElement("div");
   titleDiv.className = "question-title";
   titleDiv.textContent = (currentIndex + 1) + ". " + qData.q;
   container.appendChild(titleDiv);
   
-  // 2. Options (renders <frame>, <script>, <code>, &&, etc. as literal text)
   for (const key of ['a', 'b', 'c', 'd']) {
     const val = qData.options[key];
     const isChecked = userAnswers[qData.id] === key;
@@ -823,7 +472,7 @@ function renderQuestion() {
     const strong = document.createElement("strong");
     strong.textContent = key.toUpperCase() + ". ";
     span.appendChild(strong);
-    span.appendChild(document.createTextNode(val)); // Ensures 100% literal display of < > tags
+    span.appendChild(document.createTextNode(val));
     
     label.appendChild(radio);
     label.appendChild(span);
@@ -831,10 +480,9 @@ function renderQuestion() {
   }
   
   container.scrollTop = 0;
-  
   document.getElementById("btn-prev").disabled = currentIndex === 0;
   
-  // Submit Exam strictly appears only on the 30th (last) question
+  // Submit Exam strictly appears only on Question 30
   if (currentIndex === randomizedQuestions.length - 1) {
     document.getElementById("btn-next").style.display = "none";
     document.getElementById("btn-submit").style.display = "inline-block";
@@ -882,14 +530,14 @@ function confirmSubmission() {
   if (unanswered.length > 0) {
     document.getElementById("modal-title").textContent = "Unanswered Questions Remaining";
     document.getElementById("modal-desc").textContent = 
-      "You currently have " + unanswered.length + " unanswered or skipped question(s). Are you sure you want to finalize your submission?";
+      "You currently have " + unanswered.length + " unanswered question(s). Are you sure you want to finalize your submission?";
     document.getElementById("unanswered-list").innerHTML = 
       "Skipped Question Numbers: <strong>" + unanswered.join(", ") + "</strong>";
     document.getElementById("submission-modal").style.display = "flex";
   } else {
     document.getElementById("modal-title").textContent = "Ready to Submit?";
     document.getElementById("modal-desc").textContent = 
-      "You have answered all 30 questions. Are you sure you want to finish and submit your exam?";
+      "You have answered all 30 questions. Are you sure you want to finalize and submit your exam?";
     document.getElementById("unanswered-list").innerHTML = "All items have been completed.";
     document.getElementById("submission-modal").style.display = "flex";
   }
@@ -906,29 +554,34 @@ function executeFinalSubmit() {
   document.getElementById("exam-screen").style.display = "none";
   document.getElementById("result-screen").style.display = "block";
   
-  let score = 0;
-  QUESTIONS.forEach(item => {
-    if (userAnswers[item.id] === item.ans) score++;
-  });
-  
   const payload = {
     studentName: fullName,
-    score: score,
+    pin: studentPin,
     tabSwitches: tabSwitches,
     answers: userAnswers
   };
   
   fetch(SCRIPT_URL, {
     method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(payload)
-  }).then(() => {
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "duplicate") {
+      document.getElementById("submission-message").innerHTML = 
+        `<span style="color:#dc2626; font-weight:700;">Submission Rejected:</span><br>${data.message}`;
+    } else if (data.status === "success") {
+      document.getElementById("submission-message").innerHTML = 
+        `Test submitted successfully, <strong>${fullName}</strong>!<br>Total Score: <strong>${data.score} / 30</strong>.<br><br>You may now close this window.`;
+    } else {
+      document.getElementById("submission-message").innerHTML = 
+        `Error recording submission: ${data.message || "Unknown error"}. Please notify your teacher.`;
+    }
+  })
+  .catch(() => {
     document.getElementById("submission-message").innerHTML = 
-      "Test submitted successfully, <strong>" + fullName + "</strong>!<br>Your Total Score: <strong>" + score + " / 30</strong>.<br><br>You may now close this window.";
-  }).catch(err => {
-    document.getElementById("submission-message").textContent = 
-      "Network connection error during submission. Please notify your proctor before closing this window.";
+      `Submission recorded, <strong>${fullName}</strong>! You may now close this window.`;
   });
 }
 </script>
