@@ -5,96 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2nd Summative Test - Computer Programming (.NET)</title>
 <style>
-  :root { --primary: #1e3a8a; --bg: #f1f5f9; --card: #ffffff; --text: #0f172a; }
-  * { box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-  .container { width: 100%; max-width: 680px; background: var(--card); padding: 32px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); }
-  .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 24px; }
-  .school-title { text-align: center; margin-bottom: 20px; }
-  .school-title h2 { margin: 0; color: var(--primary); font-size: 1.35rem; }
-  .school-title p { margin: 4px 0 0; color: #64748b; font-size: 0.95rem; }
-  .timer { font-size: 1.15rem; font-weight: 700; color: #b91c1c; background: #fee2e2; padding: 6px 14px; border-radius: 9999px; letter-spacing: 0.05em; }
-  .progress { font-weight: 600; color: #475569; }
-  .question-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 20px; line-height: 1.5; }
-  .option { display: block; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; cursor: pointer; transition: all 0.15s ease-in-out; }
-  .option:hover { background: #f8fafc; border-color: var(--primary); }
-  .option input { margin-right: 12px; transform: scale(1.2); }
-  .actions { display: flex; justify-content: space-between; margin-top: 28px; }
-  button { padding: 12px 24px; border-radius: 6px; border: none; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: background 0.15s; }
-  .btn-prev { background: #e2e8f0; color: #334155; }
-  .btn-prev:hover:not(:disabled) { background: #cbd5e1; }
-  .btn-prev:disabled { opacity: 0.4; cursor: not-allowed; }
-  .btn-next { background: var(--primary); color: white; }
-  .btn-next:hover { background: #172554; }
-  .btn-submit { background: #15803d; color: white; display: none; }
-  .btn-submit:hover { background: #166534; }
-  #start-screen, #result-screen { text-align: center; }
-  .name-input { width: 100%; max-width: 400px; padding: 12px; margin: 20px 0; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 1rem; text-align: center; }
-  .instructions-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 20px 0; text-align: left; font-size: 0.9rem; line-height: 1.6; color: #475569; }
-</style>
-</head>
-<body>
-
-<div class="container">
-  <!-- 1. START SCREEN -->
-  <div id="start-screen">
-    <div class="school-title">
-      <h2>MORENO INTEGRATED SCHOOL</h2>
-      <p>2nd Summative Test in Computer Programming (.NET Technology)</p>
-    </div>
-    
-    <div class="instructions-box">
-      <strong>Exam Rules & Conditions:</strong>
-      <ul>
-        <li><strong>Time Limit:</strong> Exactly 30 minutes from the moment you click Start.</li>
-        <li><strong>Navigation:</strong> Exactly 1 question is presented at a time. Questions are randomized.</li>
-        <li><strong>Auto-Submit:</strong> Once 30 minutes expire, responses submit automatically.</li>
-        <li><strong>Proctoring Notice:</strong> Switching browser tabs, minimizing the browser, or leaving the window triggers a monitored integrity counter.</li>
-      </ul>
-    </div>
-    
-    <input type="text" id="student-name" class="name-input" placeholder="Enter Full Name (Last Name, First Name)" required><br>
-    <button class="btn-next" onclick="startExam()">Start Test Now</button>
-  </div>
-
-  <!-- 2. EXAM SCREEN -->
-  <div id="exam-screen" style="display:none;">
-    <div class="header">
-      <span class="progress" id="progress-indicator">Question 1 of 30</span>
-      <span class="timer" id="timer-display">30:00</span>
-    </div>
-    <div id="question-container"></div>
-    <div class="actions">
-      <button class="btn-prev" id="btn-prev" onclick="prevQuestion()" disabled>Previous</button>
-      <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next</button>
-      <button class="btn-submit" id="btn-submit" onclick="submitExam(false)">Submit Exam</button>
-    </div>
-  </div>
-
-  <!-- 3. RESULT SCREEN -->
-  <div id="result-screen" style="display:none;">
-    <div class="school-title">
-      <h2>Exam Completed</h2>
-    </div>
-    <p id="submission-message" style="font-size: 1.1rem; line-height: 1.6;">Transmitting responses to the grading sheet, please wait...</p>
-  </div>
-</div>
-
-<script>
-// ============================================================================
-// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx64vRes50Y6ouXGUWBMGv-00x9fHhhcFlZc52LO8Lb20TjArJvPgBFV1kLIr5kRGB2/exec";
-// ============================================================================
-
-const QUESTIONS = [
-  { id: 1, q: "What HTML tag is historically used to define a specific window frame within a frameset document?", options: { a: "<frame> element tag", b: "<panel> element tag", c: "<block> element tag", d: "<split> element tag" }, ans: "a" },
-  { id: 2, q: "Why is the action attribute necessary within an HTML <form> element definitio<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2nd Summative Test - Computer Programming (.NET)</title>
-<style>
   :root {
     --primary: #1e3a8a;
     --primary-hover: #172554;
@@ -374,22 +284,18 @@ const QUESTIONS = [
       <span class="timer" id="timer-display">30:00</span>
     </div>
 
-    <!-- Progress Bar -->
     <div class="progress-bar-container">
       <div class="progress-bar-fill" id="progress-bar"></div>
     </div>
 
-    <!-- Question Matrix / Palette -->
     <div class="palette-title">
       <span>Question Tracker:</span>
       <span id="answered-count-display">0 of 30 Answered</span>
     </div>
     <div class="question-palette" id="question-palette"></div>
 
-    <!-- Question Container -->
     <div id="question-container"></div>
 
-    <!-- Bottom Actions -->
     <div class="actions">
       <button class="btn-prev" id="btn-prev" onclick="prevQuestion()" disabled>Previous</button>
       <div style="display:flex; gap: 10px;">
@@ -408,11 +314,11 @@ const QUESTIONS = [
   </div>
 </div>
 
-<!-- Unanswered Prompt Modal -->
+<!-- Modal for Unanswered Alert -->
 <div class="modal-overlay" id="submission-modal">
   <div class="modal">
     <h3 id="modal-title">Unanswered Questions Remaining</h3>
-    <p id="modal-desc">You have skipped or missed questions. Are you sure you want to finish the test?</p>
+    <p id="modal-desc">You have skipped or missed questions. Are you sure you want to finalize your test?</p>
     <div class="unanswered-list" id="unanswered-list"></div>
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal()">Go Back & Answer</button>
@@ -424,7 +330,7 @@ const QUESTIONS = [
 <script>
 // ============================================================================
 // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx64vRes50Y6ouXGUWBMGv-00x9fHhhcFlZc52LO8Lb20TjArJvPgBFV1kLIr5kRGB2/exec";
+const SCRIPT_URL = "PASTE_YOUR_COPIED_APPS_SCRIPT_URL_HERE";
 // ============================================================================
 
 const QUESTIONS = [
@@ -552,7 +458,6 @@ function updatePaletteAndProgress() {
     }
   }
 
-  // Update Progress Bar & Counter
   const total = randomizedQuestions.length;
   const pct = (answeredCount / total) * 100;
   document.getElementById("progress-bar").style.width = `${pct}%`;
@@ -669,173 +574,6 @@ function executeFinalSubmit() {
   }).catch(err => {
     document.getElementById("submission-message").textContent = 
       "Network connection error during submission. Please notify your proctor before closing this window.";
-  });
-}
-</script>
-</body>
-</html>n?", options: { a: "It defines the visual styling applied to the form inputs.", b: "It specifies where to send data when the form is submitted.", c: "It determines the input data types allowed for the user.", d: "It restricts the maximum character limit for the inputs." }, ans: "b" },
-  { id: 3, q: "What does the acronym 'CSS' stand for in the context of standard web development?", options: { a: "Computer Styled Sheets", b: "Creative Style Systems", c: "Cascading Style Sheets", d: "Custom Styling Scripts" }, ans: "c" },
-  { id: 4, q: "Which character is used in CSS to specifically target an element by its id attribute?", options: { a: "The asterisk symbol (*)", b: "The period character (.)", c: "The tilde character (~)", d: "The hashtag symbol (#)" }, ans: "d" },
-  { id: 5, q: "In CSS, what is the primary structural difference between a class selector and an ID selector?", options: { a: "A class applies to multiple elements, while an ID must be unique.", b: "A class is only for typography, while an ID is for page structure.", c: "A class is targeted with a hashtag (#), while an ID uses a dot (.).", d: "A class always has a higher specificity priority than an ID selector." }, ans: "a" },
-  { id: 6, q: "Which CSS property is used to change the text color of an HTML element on the page?", options: { a: "font-color", b: "color", c: "text-color", d: "font-style" }, ans: "b" },
-  { id: 7, q: "Which CSS snippet will successfully center-align all paragraphs and make the text bold?", options: { a: "p { text-align: middle; font-weight: strong; }", b: "p { text-align: center; text-weight: bolder; }", c: "p { text-align: center; font-weight: bold; }", d: "p { align-text: center; font-style: heavy; }" }, ans: "c" },
-  { id: 8, q: "How do you apply a 50% transparent background color without affecting the text opacity?", options: { a: "background-color: black; opacity: 0.5;", b: "background: solid black; transparent: 50%;", c: "color: rgba(0, 0, 0, 0.5); opacity: none;", d: "background-color: rgba(0, 0, 0, 0.5);" }, ans: "d" },
-  { id: 9, q: "According to the CSS box model, what is the role of the padding property?", options: { a: "It creates space between the content and the element border.", b: "It creates space outside the border separating other blocks.", c: "It defines the visible outline surrounding the element body.", d: "It establishes the exact width and height of the container." }, ans: "a" },
-  { id: 10, q: "Which CSS declaration sets 10px margin on the top and bottom, and 20px on the left and right?", options: { a: "margin: 20px 10px;", b: "margin: 10px 20px;", c: "margin: 10px, 20px;", d: "margin: 20px, 10px;" }, ans: "b" },
-  { id: 11, q: "If a div element has width: 100px, padding: 10px, and border: 5px, what is its total width?", options: { a: "100px", b: "110px", c: "120px", d: "130px" }, ans: "d" },
-  { id: 12, q: "Which CSS property removes the default underline styling from an HTML hyperlink tag?", options: { a: "text-style: none;", b: "text-format: none;", c: "link-style: none;", d: "text-decoration: none;" }, ans: "d" },
-  { id: 13, q: "What is the visual effect of setting list-style-type: none; on a <ul> element?", options: { a: "The standard bullet points preceding list items are hidden.", b: "The hierarchical indentation of the list is fully removed.", c: "The list items are displayed horizontally across the page.", d: "The entire unordered list becomes invisible to web users." }, ans: "a" },
-  { id: 14, q: "Which property combination ensures a navigation bar stays fixed at the screen's top when scrolling?", options: { a: "position: sticky; z-index: 1;", b: "position: fixed; top: 0px;", c: "position: absolute; top: 0;", d: "position: static; float: top;" }, ans: "b" },
-  { id: 15, q: "If you apply position: relative; top: 20px; to an element, how will it visually behave on the web page?", options: { a: "It moves 20px down from its normal position without affecting surrounding elements.", b: "It moves 20px up from the bottom of the entire web page.", c: "It pushes all surrounding elements 20px further down the page.", d: "It snaps directly to the top edge of the user's browser window." }, ans: "a" },
-  { id: 16, q: "Which CSS pseudo-class specifically targets a hyperlink when the user's mouse pointer is over it?", options: { a: "a:active", b: "a:visited", c: "a:selected", d: "a:hover" }, ans: "d" },
-  { id: 17, q: "Which CSS property is required on a container element to activate the Flexbox layout?", options: { a: "display: flex;", b: "layout: flex;", c: "display: block;", d: "flex-box: true;" }, ans: "a" },
-  { id: 18, q: "Which flexbox property centers items horizontally along the main axis of a flex container?", options: { a: "align-items: center;", b: "justify-content: center;", c: "align-content: center;", d: "flex-direction: center;" }, ans: "b" },
-  { id: 19, q: "You need to build a row of flex items that wraps to the next line when space runs out. Which rule does this?", options: { a: "flex-direction: row-wrap;", b: "display: grid-wrap;", c: "flex-wrap: wrap;", d: "layout-wrap: true;" }, ans: "c" },
-  { id: 20, q: "What is the primary purpose of using media queries in Responsive Web Development?", options: { a: "To play audio and video files directly in the browser.", b: "To compress high-resolution images for faster loading.", c: "To structure the HTML document into semantic sections.", d: "To apply different CSS styles based on screen dimensions." }, ans: "d" },
-  { id: 21, q: "You wrote @media (max-width: 600px). Why are the enclosed styles NOT applying on a 500px mobile screen?", options: { a: "The viewport meta tag is likely missing from the HTML head.", b: "The media query is placed before the standard desktop CSS.", c: "Max-width only triggers when screens are exactly 600 pixels.", d: "The browser requires a minimum width for media directives." }, ans: "a" },
-  { id: 22, q: "Which code snippet creates a responsive layout that changes from two columns to one column on mobile screens?", options: { a: ".col { width: 50%; } @media (min-width: 600px) { .col { width: 100%; } }", b: ".col { width: 50%; } @media (max-width: 600px) { .col { width: 100%; } }", c: ".col { width: 100%; } @media (max-width: 600px) { .col { width: 50%; } }", d: ".col { width: 50%; } @media (max-width: 600px) { .col { width: 50%; } }" }, ans: "b" },
-  { id: 23, q: "What is the correct HTML tag to insert JavaScript code directly into a standard web page?", options: { a: "<javascript>", b: "<js-code>", c: "<script>", d: "<code>" }, ans: "c" },
-  { id: 24, q: "In a standard computational flowchart diagram, what does a diamond-shaped symbol represent?", options: { a: "Data Input/Output", b: "Process/Operation", c: "Start/End point", d: "Decision/Branching" }, ans: "d" },
-  { id: 25, q: "What is the primary purpose of writing pseudocode before writing actual programming syntax?", options: { a: "To plan the logic in plain text before writing syntax.", b: "To execute a faster compiled version of the software.", c: "To style the visual interface components of the page.", d: "To automatically generate HTML structures for the site." }, ans: "a" },
-  { id: 26, q: "Which JavaScript keyword is used to declare a variable whose assigned value cannot be changed or reassigned?", options: { a: "var", b: "const", c: "let", d: "static" }, ans: "b" },
-  { id: 27, q: "What specific JavaScript data type is represented by the literal value true?", options: { a: "String", b: "Boolean", c: "Number", d: "Object" }, ans: "b" },
-  { id: 28, q: "Which option shows the correct syntax for declaring a standard reusable function in JavaScript?", options: { a: "function:myFunction() { }", b: "create myFunction() { }", c: "def myFunction() { }", d: "function myFunction() { }" }, ans: "d" },
-  { id: 29, q: "Which JavaScript operator is used to check if two variables are strictly equal in both value and data type?", options: { a: "===", b: "==", c: "=", d: "!==" }, ans: "a" },
-  { id: 30, q: "A student wants to apply a discount if a customer buys more than 5 items OR spends over $100. Which logical operator should complete the code if (items > 5 ___ total > 100)?", options: { a: "&&", b: "||", c: "!!", d: "!=" }, ans: "b" }
-];
-
-let randomizedQuestions = [];
-let currentIndex = 0;
-let userAnswers = {};
-let studentName = "";
-let timeLeft = 30 * 60; // 30 minutes in seconds
-let timerInterval = null;
-let tabSwitches = 0;
-
-// Anti-Cheat: Tab / Window Switching Detection
-window.addEventListener("blur", () => {
-  if (document.getElementById("exam-screen").style.display === "block") {
-    tabSwitches++;
-    alert("Warning: Unfocused exam window detected. Leaving the test screen is recorded.");
-  }
-});
-
-// Fisher-Yates Randomization
-function shuffleArray(arr) {
-  const array = [...arr];
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-function startExam() {
-  const nameInput = document.getElementById("student-name").value.trim();
-  if (!nameInput) {
-    alert("Please enter your name first.");
-    return;
-  }
-  studentName = nameInput;
-  randomizedQuestions = shuffleArray(QUESTIONS);
-  
-  document.getElementById("start-screen").style.display = "none";
-  document.getElementById("exam-screen").style.display = "block";
-  
-  renderQuestion();
-  startTimer();
-}
-
-function startTimer() {
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    const mins = Math.floor(timeLeft / 60);
-    const secs = timeLeft % 60;
-    document.getElementById("timer-display").textContent = 
-      `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-      
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      alert("Time is up! Your answers are being automatically submitted.");
-      submitExam(true);
-    }
-  }, 1000);
-}
-
-function renderQuestion() {
-  const qData = randomizedQuestions[currentIndex];
-  document.getElementById("progress-indicator").textContent = `Question ${currentIndex + 1} of 30`;
-  
-  let html = `<div class="question-title">${currentIndex + 1}. ${qData.q}</div>`;
-  for (const [key, val] of Object.entries(qData.options)) {
-    const isChecked = userAnswers[qData.id] === key ? "checked" : "";
-    html += `
-      <label class="option">
-        <input type="radio" name="option" value="${key}" ${isChecked} onchange="saveAnswer(${qData.id}, '${key}')">
-        <strong>${key.toUpperCase()}.</strong> ${val}
-      </label>
-    `;
-  }
-  document.getElementById("question-container").innerHTML = html;
-  
-  document.getElementById("btn-prev").disabled = currentIndex === 0;
-  if (currentIndex === randomizedQuestions.length - 1) {
-    document.getElementById("btn-next").style.display = "none";
-    document.getElementById("btn-submit").style.display = "inline-block";
-  } else {
-    document.getElementById("btn-next").style.display = "inline-block";
-    document.getElementById("btn-submit").style.display = "none";
-  }
-}
-
-function saveAnswer(questionId, selectedOption) {
-  userAnswers[questionId] = selectedOption;
-}
-
-function nextQuestion() {
-  if (currentIndex < randomizedQuestions.length - 1) {
-    currentIndex++;
-    renderQuestion();
-  }
-}
-
-function prevQuestion() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    renderQuestion();
-  }
-}
-
-function submitExam(forced) {
-  if (!forced && !confirm("Are you sure you want to finalize and submit your test?")) return;
-  clearInterval(timerInterval);
-  
-  document.getElementById("exam-screen").style.display = "none";
-  document.getElementById("result-screen").style.display = "block";
-  
-  let score = 0;
-  QUESTIONS.forEach(item => {
-    if (userAnswers[item.id] === item.ans) score++;
-  });
-  
-  const payload = {
-    studentName: studentName,
-    score: score,
-    tabSwitches: tabSwitches,
-    answers: userAnswers
-  };
-  
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  }).then(() => {
-    document.getElementById("submission-message").innerHTML = 
-      `Test submitted successfully, <strong>${studentName}</strong>!<br>Your Total Score: <strong>${score} / 30</strong>.<br><br>You may now close this window.`;
-  }).catch(err => {
-    document.getElementById("submission-message").textContent = 
-      "Connection error during submission. Please call your teacher before closing this page.";
   });
 }
 </script>
