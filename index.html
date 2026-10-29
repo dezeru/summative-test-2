@@ -275,4 +275,662 @@
       <p>2nd Summative Test in Computer Programming (.NET Technology)</p>
     </div>
     
-    <div class="instructions-
+    <div class="instructions-box">
+      <strong>Exam Rules & Conditions:</strong>
+      <ul>
+        <li><strong>Time Limit:</strong> Exactly 30 minutes from the moment you click Start.</li>
+        <li><strong>Auto-Submit:</strong> Once 30 minutes expire, responses submit automatically.</li>
+        <li><strong>System Note:</strong> Unfocused window activity, switching browser tabs, or minimizing the test is monitored and recorded by the system.</li>
+      </ul>
+    </div>
+    
+    <div class="name-grid">
+      <div class="input-group">
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" class="input-field" required>
+      </div>
+      <div class="input-group">
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" class="input-field" required>
+      </div>
+    </div>
+
+    <button class="btn-next" style="width: 100%; margin-top: 8px; padding: 12px;" onclick="startExam()">Start Test Now</button>
+  </div>
+
+  <!-- 2. EXAM SCREEN -->
+  <div id="exam-screen" style="display:none;">
+    <!-- PINNED TOP -->
+    <div class="pinned-top">
+      <div class="header-row">
+        <span class="progress-info" id="progress-indicator">Question 1 of 30</span>
+        <span class="timer" id="timer-display">30:00</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+      <div class="palette-grid-wrap" id="question-palette"></div>
+    </div>
+
+    <!-- MIDDLE: Question Container (Safe DOM Rendering) -->
+    <div class="question-scroll-body" id="question-container"></div>
+
+    <!-- PINNED BOTTOM -->
+    <div class="pinned-bottom">
+      <button class="btn-prev" id="btn-prev" onclick="prevQuestion()" disabled>Previous</button>
+      <div>
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next</button>
+        <button class="btn-submit" id="btn-submit" onclick="confirmSubmission()">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. RESULT SCREEN -->
+  <div id="result-screen" style="display:none; padding: 30px 20px; text-align: center; margin: auto;">
+    <div class="school-title">
+      <h2>Exam Completed</h2>
+    </div>
+    <p id="submission-message" style="font-size: 1rem; line-height: 1.6;">Transmitting responses to the grading sheet, please wait...</p>
+  </div>
+</div>
+
+<!-- Modal for Unanswered Alert -->
+<div class="modal-overlay" id="submission-modal">
+  <div class="modal">
+    <h3 id="modal-title">Unanswered Questions Remaining</h3>
+    <p id="modal-desc">You have skipped or missed questions. Are you sure you want to finalize your test?</p>
+    <div class="unanswered-list" id="unanswered-list"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Go Back</button>
+      <button class="btn-submit" style="display:inline-block;" onclick="executeFinalSubmit()">Submit Anyway</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================================
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const SCRIPT_URL = "PASTE_YOUR_COPIED_APPS_SCRIPT_URL_HERE";
+// ============================================================================
+
+// All 30 items verified against the test document
+const QUESTIONS = [
+  {
+    id: 1,
+    q: "What HTML tag is historically used to define a specific window frame within a frameset document?",
+    options: {
+      a: "<frame> element tag",
+      b: "<panel> element tag",
+      c: "<block> element tag",
+      d: "<split> element tag"
+    },
+    ans: "a"
+  },
+  {
+    id: 2,
+    q: "Why is the action attribute necessary within an HTML <form> element definition?",
+    options: {
+      a: "It defines the visual styling applied to the form inputs.",
+      b: "It specifies where to send data when the form is submitted.",
+      c: "It determines the input data types allowed for the user.",
+      d: "It restricts the maximum character limit for the inputs."
+    },
+    ans: "b"
+  },
+  {
+    id: 3,
+    q: "What does the acronym \"CSS\" stand for in the context of standard web development?",
+    options: {
+      a: "Computer Styled Sheets",
+      b: "Creative Style Systems",
+      c: "Cascading Style Sheets",
+      d: "Custom Styling Scripts"
+    },
+    ans: "c"
+  },
+  {
+    id: 4,
+    q: "Which character is used in CSS to specifically target an element by its id attribute?",
+    options: {
+      a: "The asterisk symbol (*)",
+      b: "The period character (.)",
+      c: "The tilde character (~)",
+      d: "The hashtag symbol (#)"
+    },
+    ans: "d"
+  },
+  {
+    id: 5,
+    q: "In CSS, what is the primary structural difference between a class selector and an ID selector?",
+    options: {
+      a: "A class applies to multiple elements, while an ID must be unique.",
+      b: "A class is only for typography, while an ID is for page structure.",
+      c: "A class is targeted with a hashtag (#), while an ID uses a dot (.).",
+      d: "A class always has a higher specificity priority than an ID selector."
+    },
+    ans: "a"
+  },
+  {
+    id: 6,
+    q: "Which CSS property is used to change the text color of an HTML element on the page?",
+    options: {
+      a: "font-color",
+      b: "color",
+      c: "text-color",
+      d: "font-style"
+    },
+    ans: "b"
+  },
+  {
+    id: 7,
+    q: "Which CSS snippet will successfully center-align all paragraphs and make the text bold?",
+    options: {
+      a: "p { text-align: middle; font-weight: strong; }",
+      b: "p { text-align: center; text-weight: bolder; }",
+      c: "p { text-align: center; font-weight: bold; }",
+      d: "p { align-text: center; font-style: heavy; }"
+    },
+    ans: "c"
+  },
+  {
+    id: 8,
+    q: "How do you apply a 50% transparent background color without affecting the text opacity?",
+    options: {
+      a: "background-color: black; opacity: 0.5;",
+      b: "background: solid black; transparent: 50%;",
+      c: "color: rgba(0, 0, 0, 0.5); opacity: none;",
+      d: "background-color: rgba(0, 0, 0, 0.5);"
+    },
+    ans: "d"
+  },
+  {
+    id: 9,
+    q: "According to the CSS box model, what is the role of the padding property?",
+    options: {
+      a: "It creates space between the content and the element border.",
+      b: "It creates space outside the border separating other blocks.",
+      c: "It defines the visible outline surrounding the element body.",
+      d: "It establishes the exact width and height of the container."
+    },
+    ans: "a"
+  },
+  {
+    id: 10,
+    q: "Which CSS declaration sets 10px margin on the top and bottom, and 20px on the left and right?",
+    options: {
+      a: "margin: 20px 10px;",
+      b: "margin: 10px 20px;",
+      c: "margin: 10px, 20px;",
+      d: "margin: 20px, 10px;"
+    },
+    ans: "b"
+  },
+  {
+    id: 11,
+    q: "If a div element has width: 100px, padding: 10px, and border: 5px, what is its total width?",
+    options: {
+      a: "100px",
+      b: "110px",
+      c: "120px",
+      d: "130px"
+    },
+    ans: "d"
+  },
+  {
+    id: 12,
+    q: "Which CSS property removes the default underline styling from an HTML hyperlink tag?",
+    options: {
+      a: "text-style: none;",
+      b: "text-format: none;",
+      c: "link-style: none;",
+      d: "text-decoration: none;"
+    },
+    ans: "d"
+  },
+  {
+    id: 13,
+    q: "What is the visual effect of setting list-style-type: none; on a <ul> element?",
+    options: {
+      a: "The standard bullet points preceding list items are hidden.",
+      b: "The hierarchical indentation of the list is fully removed.",
+      c: "The list items are displayed horizontally across the page.",
+      d: "The entire unordered list becomes invisible to web users."
+    },
+    ans: "a"
+  },
+  {
+    id: 14,
+    q: "Which property combination ensures a navigation bar stays fixed at the screen's top when scrolling?",
+    options: {
+      a: "position: sticky; z-index: 1;",
+      b: "position: fixed; top: 0px;",
+      c: "position: absolute; top: 0;",
+      d: "position: static; float: top;"
+    },
+    ans: "b"
+  },
+  {
+    id: 15,
+    q: "If you apply position: relative; top: 20px; to an element, how will it visually behave on the web page?",
+    options: {
+      a: "It moves 20px down from its normal position without affecting surrounding elements.",
+      b: "It moves 20px up from the bottom of the entire web page.",
+      c: "It pushes all surrounding elements 20px further down the page.",
+      d: "It snaps directly to the top edge of the user's browser window."
+    },
+    ans: "a"
+  },
+  {
+    id: 16,
+    q: "Which CSS pseudo-class specifically targets a hyperlink when the user's mouse pointer is over it?",
+    options: {
+      a: "a:active",
+      b: "a:visited",
+      c: "a:selected",
+      d: "a:hover"
+    },
+    ans: "d"
+  },
+  {
+    id: 17,
+    q: "Which CSS property is required on a container element to activate the Flexbox",
+    options: {
+      a: "display: flex;",
+      b: "layout: flex;",
+      c: "display: block;",
+      d: "flex-box: true;"
+    },
+    ans: "a"
+  },
+  {
+    id: 18,
+    q: "Which flexbox property centers items horizontally along the main axis of a flex container?",
+    options: {
+      a: "align-items: center;",
+      b: "justify-content: center;",
+      c: "align-content: center;",
+      d: "flex-direction: center;"
+    },
+    ans: "b"
+  },
+  {
+    id: 19,
+    q: "You need to build a row of flex items that wraps to the next line when space runs out. Which rule does this?",
+    options: {
+      a: "flex-direction: row-wrap;",
+      b: "display: grid-wrap;",
+      c: "flex-wrap: wrap;",
+      d: "layout-wrap: true;"
+    },
+    ans: "c"
+  },
+  {
+    id: 20,
+    q: "What is the primary purpose of using media queries in Responsive Web Development?",
+    options: {
+      a: "To play audio and video files directly in the browser.",
+      b: "To compress high-resolution images for faster loading.",
+      c: "To structure the HTML document into semantic sections.",
+      d: "To apply different CSS styles based on screen dimensions."
+    },
+    ans: "d"
+  },
+  {
+    id: 21,
+    q: "You wrote @media (max-width: 600px). Why are the enclosed styles NOT applying on a 500px mobile screen?",
+    options: {
+      a: "The viewport meta tag is likely missing from the HTML head.",
+      b: "The media query is placed before the standard desktop CSS.",
+      c: "Max-width only triggers when screens are exactly 600 pixels.",
+      d: "The browser requires a minimum width for media directives."
+    },
+    ans: "a"
+  },
+  {
+    id: 22,
+    q: "Which code snippet creates a responsive layout that changes from two columns to one column on mobile screens?",
+    options: {
+      a: ".col { width: 50%; } @media (min-width: 600px) { .col { width: 100%; } }",
+      b: ".col { width: 50%; } @media (max-width: 600px) { .col { width: 100%; } }",
+      c: ".col { width: 100%; } @media (max-width: 600px) { .col { width: 50%; } }",
+      d: ".col { width: 50%; } @media (max-width: 600px) { .col { width: 50%; } }"
+    },
+    ans: "b"
+  },
+  {
+    id: 23,
+    q: "What is the correct HTML tag to insert JavaScript code directly into a standard web page?",
+    options: {
+      a: "<javascript>",
+      b: "<js-code>",
+      c: "<script>",
+      d: "<code>"
+    },
+    ans: "c"
+  },
+  {
+    id: 24,
+    q: "In a standard computational flowchart diagram, what does a diamond-shaped symbol represent?",
+    options: {
+      a: "Data Input/Output",
+      b: "Process/Operation",
+      c: "Start/End point",
+      d: "Decision/Branching"
+    },
+    ans: "d"
+  },
+  {
+    id: 25,
+    q: "What is the primary purpose of writing pseudocode before writing actual programming syntax?",
+    options: {
+      a: "To plan the logic in plain text before writing syntax.",
+      b: "To execute a faster compiled version of the software.",
+      c: "To style the visual interface components of the page.",
+      d: "To automatically generate HTML structures for the site."
+    },
+    ans: "a"
+  },
+  {
+    id: 26,
+    q: "Which JavaScript keyword is used to declare a variable whose assigned value cannot be changed or reassigned?",
+    options: {
+      a: "var",
+      b: "const",
+      c: "let",
+      d: "static"
+    },
+    ans: "b"
+  },
+  {
+    id: 27,
+    q: "What specific JavaScript data type is represented by the literal value true?",
+    options: {
+      a: "String",
+      b: "Number",
+      c: "Boolean",
+      d: "Object"
+    },
+    ans: "c"
+  },
+  {
+    id: 28,
+    q: "Which option shows the correct syntax for declaring a standard reusable function in JavaScript?",
+    options: {
+      a: "function:myFunction() { }",
+      b: "create myFunction() { }",
+      c: "def myFunction() { }",
+      d: "function myFunction() { }"
+    },
+    ans: "d"
+  },
+  {
+    id: 29,
+    q: "Which JavaScript operator is used to check if two variables are strictly equal in both value and data type?",
+    options: {
+      a: "===",
+      b: "==",
+      c: "=",
+      d: "!=="
+    },
+    ans: "a"
+  },
+  {
+    id: 30,
+    q: "A student wants to apply a discount if a customer buys more than 5 items OR spends over $100. Which logical operator should complete the code if (items > 5 ___ total > 100)?",
+    options: {
+      a: "&&",
+      b: "||",
+      c: "!!",
+      d: "!="
+    },
+    ans: "b"
+  }
+];
+
+let randomizedQuestions = [];
+let currentIndex = 0;
+let userAnswers = {};
+let fullName = "";
+let timeLeft = 30 * 60;
+let timerInterval = null;
+let tabSwitches = 0;
+
+// Universal Anti-Cheat Trackers (Mobile & Desktop)
+function recordUnfocusedEvent() {
+  if (document.getElementById("exam-screen").style.display === "flex") {
+    tabSwitches++;
+  }
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    recordUnfocusedEvent();
+  }
+});
+window.addEventListener("pagehide", recordUnfocusedEvent);
+window.addEventListener("blur", recordUnfocusedEvent);
+
+function shuffleArray(arr) {
+  const array = [...arr];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function startExam() {
+  const firstName = document.getElementById("first-name").value.trim();
+  const lastName = document.getElementById("last-name").value.trim();
+  
+  if (!firstName || !lastName) {
+    alert("Please enter both your First Name and Last Name.");
+    return;
+  }
+  
+  fullName = lastName + ", " + firstName;
+  randomizedQuestions = shuffleArray(QUESTIONS);
+  
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("exam-screen").style.display = "flex";
+  
+  buildPalette();
+  renderQuestion();
+  startTimer();
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+    document.getElementById("timer-display").textContent = 
+      mins.toString().padStart(2, '0') + ":" + secs.toString().padStart(2, '0');
+      
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      alert("Time is up! Your answers are being submitted automatically.");
+      executeFinalSubmit();
+    }
+  }, 1000);
+}
+
+function buildPalette() {
+  const container = document.getElementById("question-palette");
+  container.innerHTML = "";
+  for (let i = 0; i < randomizedQuestions.length; i++) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "palette-btn";
+    btn.id = "palette-btn-" + i;
+    btn.textContent = (i + 1).toString();
+    btn.onclick = () => jumpToQuestion(i);
+    container.appendChild(btn);
+  }
+}
+
+function updatePaletteAndProgress() {
+  let answeredCount = 0;
+  for (let i = 0; i < randomizedQuestions.length; i++) {
+    const q = randomizedQuestions[i];
+    const btn = document.getElementById("palette-btn-" + i);
+    
+    btn.className = "palette-btn";
+    if (userAnswers[q.id]) {
+      btn.classList.add("answered");
+      answeredCount++;
+    }
+    if (i === currentIndex) {
+      btn.classList.add("active");
+    }
+  }
+
+  const total = randomizedQuestions.length;
+  const pct = (answeredCount / total) * 100;
+  document.getElementById("progress-bar").style.width = pct + "%";
+  document.getElementById("progress-indicator").textContent = 
+    `Question ${currentIndex + 1} of ${total} (${answeredCount} answered)`;
+}
+
+// SAFE TEXT RENDERING: Treats all <tags> and symbols as literal text
+function renderQuestion() {
+  const qData = randomizedQuestions[currentIndex];
+  const container = document.getElementById("question-container");
+  container.innerHTML = ""; // Empty container cleanly
+  
+  // 1. Question Title (renders <form>, <ul>, etc. as literal text)
+  const titleDiv = document.createElement("div");
+  titleDiv.className = "question-title";
+  titleDiv.textContent = (currentIndex + 1) + ". " + qData.q;
+  container.appendChild(titleDiv);
+  
+  // 2. Options (renders <frame>, <script>, <code>, &&, etc. as literal text)
+  for (const key of ['a', 'b', 'c', 'd']) {
+    const val = qData.options[key];
+    const isChecked = userAnswers[qData.id] === key;
+    
+    const label = document.createElement("label");
+    label.className = "option";
+    
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "option";
+    radio.value = key;
+    radio.checked = isChecked;
+    radio.onchange = () => saveAnswer(qData.id, key);
+    
+    const span = document.createElement("span");
+    const strong = document.createElement("strong");
+    strong.textContent = key.toUpperCase() + ". ";
+    span.appendChild(strong);
+    span.appendChild(document.createTextNode(val)); // Ensures 100% literal display of < > tags
+    
+    label.appendChild(radio);
+    label.appendChild(span);
+    container.appendChild(label);
+  }
+  
+  container.scrollTop = 0;
+  
+  document.getElementById("btn-prev").disabled = currentIndex === 0;
+  
+  // Submit Exam strictly appears only on the 30th (last) question
+  if (currentIndex === randomizedQuestions.length - 1) {
+    document.getElementById("btn-next").style.display = "none";
+    document.getElementById("btn-submit").style.display = "inline-block";
+  } else {
+    document.getElementById("btn-next").style.display = "inline-block";
+    document.getElementById("btn-submit").style.display = "none";
+  }
+
+  updatePaletteAndProgress();
+}
+
+function saveAnswer(questionId, selectedOption) {
+  userAnswers[questionId] = selectedOption;
+  updatePaletteAndProgress();
+}
+
+function jumpToQuestion(index) {
+  currentIndex = index;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (currentIndex < randomizedQuestions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  }
+}
+
+function prevQuestion() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderQuestion();
+  }
+}
+
+function confirmSubmission() {
+  const unanswered = [];
+  for (let i = 0; i < randomizedQuestions.length; i++) {
+    const q = randomizedQuestions[i];
+    if (!userAnswers[q.id]) {
+      unanswered.push(i + 1);
+    }
+  }
+
+  if (unanswered.length > 0) {
+    document.getElementById("modal-title").textContent = "Unanswered Questions Remaining";
+    document.getElementById("modal-desc").textContent = 
+      "You currently have " + unanswered.length + " unanswered or skipped question(s). Are you sure you want to finalize your submission?";
+    document.getElementById("unanswered-list").innerHTML = 
+      "Skipped Question Numbers: <strong>" + unanswered.join(", ") + "</strong>";
+    document.getElementById("submission-modal").style.display = "flex";
+  } else {
+    document.getElementById("modal-title").textContent = "Ready to Submit?";
+    document.getElementById("modal-desc").textContent = 
+      "You have answered all 30 questions. Are you sure you want to finish and submit your exam?";
+    document.getElementById("unanswered-list").innerHTML = "All items have been completed.";
+    document.getElementById("submission-modal").style.display = "flex";
+  }
+}
+
+function closeModal() {
+  document.getElementById("submission-modal").style.display = "none";
+}
+
+function executeFinalSubmit() {
+  closeModal();
+  clearInterval(timerInterval);
+  
+  document.getElementById("exam-screen").style.display = "none";
+  document.getElementById("result-screen").style.display = "block";
+  
+  let score = 0;
+  QUESTIONS.forEach(item => {
+    if (userAnswers[item.id] === item.ans) score++;
+  });
+  
+  const payload = {
+    studentName: fullName,
+    score: score,
+    tabSwitches: tabSwitches,
+    answers: userAnswers
+  };
+  
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    document.getElementById("submission-message").innerHTML = 
+      "Test submitted successfully, <strong>" + fullName + "</strong>!<br>Your Total Score: <strong>" + score + " / 30</strong>.<br><br>You may now close this window.";
+  }).catch(err => {
+    document.getElementById("submission-message").textContent = 
+      "Network connection error during submission. Please notify your proctor before closing this window.";
+  });
+}
+</script>
+</body>
+</html>
